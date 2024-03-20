@@ -12,10 +12,9 @@ const createWindow = () => {
 		width: 1920,
 		height: 1080,
 		autoHideMenuBar: true,
-		icon: path.join(__dirname, '../../resources/icon.ico'),
+		icon: path.join(__dirname, '../../public/icon.ico'),
 		webPreferences: {
-			preload: path.join(__dirname, 'preload.js'),
-			nodeIntegration: true,
+			preload: path.join(__dirname, 'preload.ts'),
 		},
 	});
 
@@ -56,3 +55,4 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+

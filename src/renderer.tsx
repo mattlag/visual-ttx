@@ -25,8 +25,15 @@
  *  });
  * ```
  */
+import './style.css';
 
-import './app.tsx';
-import './index.css';
+import React, { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './components/App';
 
-console.log('👋 This message is being logged by "renderer.ts", included via Vite');
+const wrapper = ReactDOM.createRoot(document.getElementById('wrapper'));
+wrapper.render(
+	<StrictMode>
+		<App />
+	</StrictMode>
+);

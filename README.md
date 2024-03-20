@@ -1,4 +1,4 @@
-<img src="./resources/icon.png" height="100">
+<img src="./public/icon.png" height="100">
 
 # visual-ttx: A GUI for TTX
 
