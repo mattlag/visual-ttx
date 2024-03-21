@@ -1,4 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import installExtension, {
+	REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-installer';
 import path from 'path';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -14,7 +17,7 @@ const createWindow = () => {
 		autoHideMenuBar: true,
 		icon: path.join(__dirname, '../../public/icon.ico'),
 		webPreferences: {
-			preload: path.join(__dirname, 'preload.ts'),
+			preload: path.join(__dirname, '../../src/preload.ts'),
 		},
 	});
 
@@ -30,6 +33,12 @@ const createWindow = () => {
 	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
 };
+
+app.whenReady().then(() => {
+	installExtension(REACT_DEVELOPER_TOOLS)
+		.then((name) => console.log(`Added Extension:  ${name}`))
+		.catch((err) => console.log('An error occurred: ', err));
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -53,6 +62,8 @@ app.on('activate', () => {
 	}
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+/*
+ * IPC Handlers
+ */
+// ipcMain.handle('getData', async (_) => { return 'test'});
 
