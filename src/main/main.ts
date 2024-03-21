@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import installExtension, {
 	REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-installer';
@@ -10,15 +10,13 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
-	// Create the browser window
-	console.log(`\n\n__dirname ${__dirname}`);
+	// Create the browser window.
 	const mainWindow = new BrowserWindow({
 		width: 1920,
 		height: 1080,
 		autoHideMenuBar: true,
 		icon: path.join(__dirname, '../../public/icon.ico'),
 		webPreferences: {
-			nodeIntegration: true,
 			preload: path.join(__dirname, '../../src/preload.ts'),
 		},
 	});
@@ -68,3 +66,4 @@ app.on('activate', () => {
  * IPC Handlers
  */
 // ipcMain.handle('getData', async (_) => { return 'test'});
+

@@ -31,7 +31,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App';
 
 
-// export const ttxJsonData = React.createContext('{"name": "Hello, world!"}');
+export const ttxJsonData = React.createContext('{"name": "Hello, world!"}');
 	
 const wrapper = ReactDOM.createRoot(document.getElementById('wrapper'));
 wrapper.render(
