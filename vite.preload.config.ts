@@ -4,6 +4,8 @@ import { getBuildConfig, external, pluginHotRestart } from './vite.base.config';
 
 // https://vitejs.dev/config
 export default defineConfig((env) => {
+  // console.log(`\n\nvite.preload.config.ts > defineConfig`);
+  // console.log(env);
   const forgeEnv = env as ConfigEnv<'build'>;
   const { forgeConfigSelf } = forgeEnv;
   const config: UserConfig = {
