@@ -5,12 +5,13 @@
 // eslint-disable-next-line
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('visualTtxApi', {
+contextBridge.exposeInMainWorld('vttxApi', {
 	getData: () => {
-		console.log(`PRELOAD.TS > calling sendSync('getData)`);
 		const result = ipcRenderer.sendSync('getData');
-		console.log(`PRELOAD.TS > ${result}`);
 		return result;
 	},
-	vttxLoadFile: () => ipcRenderer.sendSync('vttxLoadFile'),
+	loadFile: () => {
+		const result = ipcRenderer.sendSync('loadFile');
+		return result;
+	},
 });

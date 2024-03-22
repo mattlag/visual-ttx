@@ -1,12 +1,10 @@
 import * as React from 'react';
 
 export default function TextFileDisplay() {
-	console.log(`TEXTFILEDISPLAY.tsx > calling getData`);
-	const ttxData = window.visualTtxApi.getData();
-	console.log(ttxData);
+	const ttxData = '' + window.vttxApi.getData();
 	return (
 		<>
-			<textarea value={ttxData} disabled></textarea>
+			<h3>{ttxData}</h3>
 		</>
 	);
 }

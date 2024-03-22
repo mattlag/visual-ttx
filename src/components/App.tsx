@@ -6,12 +6,12 @@ export default function App() {
 		<>
 			<h1>Hello! yep</h1>
 			<TextFileDisplay />
-			<button onClick={vttxLoadFile}>Load a text file</button>
+			<button onClick={loadFile}>Load a text file</button>
 		</>
 	);
 }
 
-function vttxLoadFile() {
-	const path = window.visualTtxApi.vttxLoadFile();
-	console.log(`APP vttxLoadFile returned ${JSON.stringify(path)}`);
+function loadFile() {
+	const path = window.vttxApi.loadFile();
+	console.log(`APP loadFile returned ${JSON.stringify(path)}`);
 }

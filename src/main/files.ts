@@ -1,8 +1,7 @@
 import { BrowserWindow, dialog } from 'electron';
 
-export function vttxLoadFile() {
+export function loadFile() {
 	const result = dialog.showOpenDialogSync(BrowserWindow.getFocusedWindow());
-	console.log(result);
 	return result;
 
 	// dialog
@@ -20,6 +19,5 @@ export function vttxLoadFile() {
 }
 
 export function getData() {
-	console.log(`FILES.TS > getData()`);
 	return 'Example data from files.ts';
 }

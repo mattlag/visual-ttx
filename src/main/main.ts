@@ -1,6 +1,15 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import { getData, vttxLoadFile } from './files';
+import { getData, loadFile } from './files';
+
+declare global {
+	interface Window {
+		vttxApi?: {
+			getData?: () => void;
+			loadFile?: () => void;
+		};
+	}
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -40,18 +49,17 @@ app.whenReady().then(() => {
 	/*
 	 * IPC Handlers
 	 */
-	ipcMain.handle('getData', () => {
-		console.log(`MAIN.TS > ipcMain.handle('getData'`);
-		getData();
-	});
-	ipcMain.on('getData', (event, arg) => {
-		console.log(`MAIN.TS > ipcMain.on('getData')`);
+	// ipcMain.handle('getData', getData);
+	ipcMain.on('getData', (event) => {
 		const result = getData();
-		console.log(`MAIN.TS > ${result}`);
 		event.returnValue = result;
 	});
-	// ipcMain.handle('vttxLoadFile', vttxLoadFile);
-	ipcMain.on('vttxLoadFile', vttxLoadFile);
+
+	// ipcMain.handle('loadFile', loadFile);
+	ipcMain.on('loadFile', (event) => {
+		const result = loadFile();
+		event.returnValue = result;
+	});
 
 	/*
 	 * Create Window
