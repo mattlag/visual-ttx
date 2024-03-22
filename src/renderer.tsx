@@ -25,14 +25,11 @@
  *  });
  * ```
  */
-import './style.css';
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App';
+import './style.css';
 
-
-export const ttxJsonData = React.createContext('{"name": "Hello, world!"}');
-	
 const wrapper = ReactDOM.createRoot(document.getElementById('wrapper'));
 wrapper.render(
 	<StrictMode>

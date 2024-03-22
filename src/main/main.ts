@@ -1,8 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import installExtension, {
-	REACT_DEVELOPER_TOOLS,
-} from 'electron-devtools-installer';
 import path from 'path';
+import { getData, vttxLoadFile } from './files';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -29,21 +27,38 @@ const createWindow = () => {
 			path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
 		);
 	}
-
-	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
 };
-
-app.whenReady().then(() => {
-	installExtension(REACT_DEVELOPER_TOOLS)
-		.then((name) => console.log(`Added Extension:  ${name}`))
-		.catch((err) => console.log('An error occurred: ', err));
-});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+	// installExtension(REACT_DEVELOPER_TOOLS)
+	// 	.then((name) => console.log(`Added Extension:  ${name}`))
+	// 	.catch((err) => console.log('An error occurred: ', err));
+
+	/*
+	 * IPC Handlers
+	 */
+	ipcMain.handle('getData', () => {
+		console.log(`MAIN.TS > ipcMain.handle('getData'`);
+		getData();
+	});
+	ipcMain.on('getData', (event, arg) => {
+		console.log(`MAIN.TS > ipcMain.on('getData')`);
+		const result = getData();
+		console.log(`MAIN.TS > ${result}`);
+		event.returnValue = result;
+	});
+	// ipcMain.handle('vttxLoadFile', vttxLoadFile);
+	ipcMain.on('vttxLoadFile', vttxLoadFile);
+
+	/*
+	 * Create Window
+	 */
+	createWindow();
+	BrowserWindow.getFocusedWindow().webContents.openDevTools();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -61,9 +76,3 @@ app.on('activate', () => {
 		createWindow();
 	}
 });
-
-/*
- * IPC Handlers
- */
-// ipcMain.handle('getData', async (_) => { return 'test'});
-
