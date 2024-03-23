@@ -1,21 +1,11 @@
 import { BrowserWindow, dialog } from 'electron';
+import { readFileSync } from 'fs';
 
 export function loadFile() {
-	const result = dialog.showOpenDialogSync(BrowserWindow.getFocusedWindow());
-	return result;
-
-	// dialog
-	// 	.showOpenDialog(BrowserWindow.getFocusedWindow(), {
-	// 		properties: ['openFile', 'openDirectory'],
-	// 	})
-	// 	.then((result) => {
-	// 		console.log(result.canceled);
-	// 		console.log(result.filePaths);
-	// 		return result.filePaths;
-	// 	})
-	// 	.catch((err) => {
-	// 		console.log(err);
-	// 	});
+	const path = dialog.showOpenDialogSync(BrowserWindow.getFocusedWindow());
+	console.log(path[0]);
+	const content = readFileSync(path[0], { encoding: 'utf8' });
+	return content;
 }
 
 export function getData() {

@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-export default function TextFileDisplay() {
-	const ttxData = '' + window.vttxApi.getData();
+export default function TextFileDisplay({ content }: { content: string }) {
 	return (
 		<>
-			<h3>{ttxData}</h3>
+			<pre>{content}</pre>
 		</>
 	);
 }
