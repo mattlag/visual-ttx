@@ -4,9 +4,13 @@
   font-family: Helvetica, sans-serif;
 }
 
+body {
+  padding: 20px;
+  background-color: hsl(180, 50%, 90%);
+}
+
 #wrapper {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: hsl(180, 50%, 90%);
 }

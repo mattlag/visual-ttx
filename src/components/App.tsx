@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextFileDisplay from './TextFileDisplay';
 
 export default function App() {
-	const [ttxData, setTtxData] = React.useState('loading...');
+	const [ttxData, setTtxData] = React.useState('(file contents)');
 
 	function loadFile() {
 		const path = '' + window.vttxApi.loadFile();
@@ -12,9 +12,11 @@ export default function App() {
 
 	return (
 		<>
-			<h1>Hello! yep</h1>
+			<h1>vttx</h1>
+			<br></br>
+			<button onClick={loadFile}>Load a file</button>
+			<br></br><br></br>
 			<TextFileDisplay content={ttxData} />
-			<button onClick={loadFile}>Load a text file</button>
 		</>
 	);
 }
