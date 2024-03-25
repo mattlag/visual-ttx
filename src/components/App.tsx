@@ -4,10 +4,11 @@ import TextFileDisplay from './TextFileDisplay';
 export default function App() {
 	const [ttxData, setTtxData] = React.useState('(file contents)');
 
-	function loadFile() {
-		const path = '' + window.vttxApi.loadFile();
-		console.log(`APP loadFile returned ${JSON.stringify(path)}`);
-		setTtxData(path);
+	async function loadFile() {
+		setTtxData('Awaiting file...');
+		const result = '' + await window.vttxApi.handleLoadFile();
+		console.log(`APP loadFile returned ${result}`);
+		setTtxData(result);
 	}
 
 	return (

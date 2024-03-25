@@ -6,12 +6,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('vttxApi', {
-	getData: () => {
-		const result = ipcRenderer.sendSync('getData');
-		return result;
-	},
-	loadFile: () => {
-		const result = ipcRenderer.sendSync('loadFile');
-		return result;
-	},
+	handleLoadFile: () => ipcRenderer.invoke('handleLoadFile'),
 });

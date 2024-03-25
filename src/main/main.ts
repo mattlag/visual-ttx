@@ -1,12 +1,11 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import { getData, loadFile } from './files';
+import { handleLoadFile } from './files';
 
 declare global {
 	interface Window {
 		vttxApi?: {
-			getData?: () => void;
-			loadFile?: () => void;
+			handleLoadFile?: () => void;
 		};
 	}
 }
@@ -49,22 +48,13 @@ app.whenReady().then(() => {
 	/*
 	 * IPC Handlers
 	 */
-	// ipcMain.handle('getData', getData);
-	ipcMain.on('getData', (event) => {
-		const result = getData();
-		event.returnValue = result;
-	});
-
-	// ipcMain.handle('loadFile', loadFile);
-	ipcMain.on('loadFile', (event) => {
-		const result = loadFile();
-		event.returnValue = result;
-	});
+	ipcMain.handle('handleLoadFile', handleLoadFile);
 
 	/*
 	 * Create Window
 	 */
 	createWindow();
+	
 	BrowserWindow.getFocusedWindow().webContents.openDevTools();
 });
 
