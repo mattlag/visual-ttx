@@ -1,6 +1,6 @@
 import { BrowserWindow, dialog } from 'electron';
 import fs from 'fs';
-const { ttx } = require('@web-alchemy/fonttools');
+const { ttx } = require('@web-alchemy/fonttools'); // eslint-disable-line
 
 export interface FileInfo {
 	content?: string;

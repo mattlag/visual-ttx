@@ -30,7 +30,7 @@ const createWindow = () => {
 		autoHideMenuBar: true,
 		icon: path.join(__dirname, '../../public/icon.ico'),
 		webPreferences: {
-			preload: path.join(__dirname, '../../src/preload.ts'),
+			preload: path.join(__dirname, '../../src/preload.js'),
 		},
 	});
 
