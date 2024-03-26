@@ -1,11 +1,18 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import { handleLoadFile } from './files';
+import {
+	FileInfo,
+	handleLoadFile,
+	handleSaveFontFile,
+	handleSaveTTXFile,
+} from './files';
 
 declare global {
 	interface Window {
 		vttxApi?: {
-			handleLoadFile?: () => void;
+			handleLoadFile?: () => FileInfo;
+			handleSaveTTXFile?: (fileInfo: FileInfo) => void;
+			handleSaveFontFile?: (fileInfo: FileInfo) => void;
 		};
 	}
 }
@@ -49,12 +56,18 @@ app.whenReady().then(() => {
 	 * IPC Handlers
 	 */
 	ipcMain.handle('handleLoadFile', handleLoadFile);
+	ipcMain.handle('handleSaveTTXFile', async (event, args) => {
+		await handleSaveTTXFile(args);
+	});
+	ipcMain.handle('handleSaveFontFile', async (event, args) => {
+		await handleSaveFontFile(args);
+	});
 
 	/*
 	 * Create Window
 	 */
 	createWindow();
-	
+
 	BrowserWindow.getFocusedWindow().webContents.openDevTools();
 });
 

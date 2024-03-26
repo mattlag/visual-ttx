@@ -1,16 +1,32 @@
 * {
-  margin: 0;
-  padding: 0;
-  font-family: Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, sans-serif;
+	box-sizing: border-box;
 }
 
 body {
-  padding: 20px;
-  background-color: hsl(180, 50%, 90%);
+	background-color: hsl(180, 50%, 90%);
 }
 
 #wrapper {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+	padding: 20px;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+pre {
+	padding: 20px;
+	font-family: monospace;
+	font-size: 1.2em;
+	border: 1px solid slategray;
+	height: calc(100vh - 200px);
+	overflow-y: scroll;
+	background-color: white;
+}
+
+button {
+	margin: 0px 10px 0px 0px;
+	padding: 2px 6px;
 }
