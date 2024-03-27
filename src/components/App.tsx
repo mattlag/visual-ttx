@@ -1,10 +1,32 @@
 import * as React from 'react';
-import CodeEditor from './CodeEditor/CodeEditor';
+import { XMLtoJSON } from '../../src/lib/XMLtoJSON';
 import { FileInfo } from '../../src/main/files';
 
-let loadedFile:FileInfo;
+let loadedFile: FileInfo;
 export default function App() {
 	const [ttxData, setTtxData] = React.useState('<!--file contents-->');
+	const [jsonData, setJsonData] = React.useState({
+		name: 'test',
+		attributes: {},
+		content: [],
+	});
+
+	const appJsx = (
+		<>
+			<h1>vttx</h1>
+			<br></br>
+			<button onClick={loadFile}>Load a file</button>
+			<span>&emsp;</span>
+			<button onClick={saveTTXFile}>Save XML file</button>
+			<button onClick={saveFontFile}>Save Font file</button>
+			<br></br>
+			<br></br>
+			{/*<CodeEditor ttxData={ttxData} setTtxData={setTtxData} />*/}
+			<div id="table-wrapper">
+				{jsonData.content.map(table => <h1 key={table.name}>{table.name}</h1>)}
+			</div>
+		</>
+	);
 
 	async function loadFile() {
 		setTtxData('<!--Awaiting file...-->');
@@ -13,6 +35,14 @@ export default function App() {
 		console.log(loadedFile);
 		document.querySelector('h1').innerHTML = `vttx: ${loadedFile.name}`;
 		setTtxData(loadedFile.content);
+		const loadedData = XMLtoJSON(loadedFile.content);
+		console.log(loadedData);
+		setJsonData(loadedData);
+		console.log(jsonData);
+		const tableWrapper = document.getElementById('table-wrapper');
+		loadedData.content.forEach((tlNode) => {
+			console.log(tlNode.name);
+		});
 	}
 
 	function saveTTXFile() {
@@ -31,17 +61,5 @@ export default function App() {
 		window.vttxApi.handleSaveFontFile(saveFile);
 	}
 
-	return (
-		<>
-			<h1>vttx</h1>
-			<br></br>
-			<button onClick={loadFile}>Load a file</button>
-			<span>&emsp;</span>
-			<button onClick={saveTTXFile}>Save XML file</button>
-			<button onClick={saveFontFile}>Save Font file</button>
-			<br></br>
-			<br></br>
-			<CodeEditor ttxData={ttxData} setTtxData={setTtxData} />
-		</>
-	);
+	return appJsx;
 }

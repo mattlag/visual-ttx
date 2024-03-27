@@ -1,4 +1,5 @@
 // prettier-ignore
+// cSpell:disable
 export const fontTables = {
 	GlyphOrder: { id: 'GlyphOrder', name: 'Glyph Order', note: 'TTX uses this table to track glyph ordering, it is not an actual font file table.', type: '' },
 	BASE: { id: 'BASE', name: 'Baseline data', type: 'advanced' },
