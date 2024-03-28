@@ -10,20 +10,25 @@ export default function App() {
 
 	const appJsx = (
 		<>
-			<h1>vttx</h1>
-			<br></br>
-			<button onClick={loadFile}>Load a file</button>
-			<span>&emsp;</span>
-			<button onClick={saveTTXFile}>Save XML file</button>
-			<button onClick={saveFontFile}>Save Font file</button>
-			<br></br>
-			<br></br>
-			<div className="table-wrapper">
-				{xmlDoc?.childNodes &&
-					Array.from(xmlDoc.childNodes)
-						.filter((node) => node.nodeName !== '#text')
-						.map((node) => <TableDisplay key={node.nodeName} data={node} />)}
-			</div>
+			<header>
+				<h1 id="app-title">vttx</h1>
+				<div id="app-tabs"></div>
+				<div id="app-actions">
+					<button onClick={loadFile}>Load a file</button>
+					<span>&emsp;</span>
+					<button onClick={saveTTXFile}>Save XML file</button>
+					<button onClick={saveFontFile}>Save Font file</button>
+				</div>
+			</header>
+			<main>
+				<div className="scroll-content">
+					{loadedFile?.name && <h1>{loadedFile.name}</h1>}
+					{xmlDoc?.childNodes &&
+						Array.from(xmlDoc.childNodes)
+							.filter((node) => node.nodeName !== '#text')
+							.map((node) => <TableDisplay key={node.nodeName} data={node} />)}
+				</div>
+			</main>
 		</>
 	);
 
@@ -32,7 +37,6 @@ export default function App() {
 		loadedFile = await window.vttxApi.handleLoadFile();
 		console.log(`APP loadFile returned:`);
 		console.log(loadedFile);
-		document.querySelector('h1').innerHTML = `vttx: ${loadedFile.name}`;
 		setTtxData(loadedFile.content);
 		const xmlDoc = XMLtoJSON(loadedFile.content).documentElement;
 		console.log(xmlDoc.childNodes);
