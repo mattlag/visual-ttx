@@ -1,18 +1,16 @@
+
+
 /**
  * XML to JSON does exactly what it sounds like.
  * Feed it an XML string, and it converts the data
  * to JSON format.
  * @param {String} inputXML - XML data
- * @param {Object} trimOptions - How to handle whitespace, newlines, and tabs
  * @return {Object} - Javascript object
  */
-export function XMLtoJSON(inputXML = '', trimOptions = {}) {
-	const console_debug = false;
-	log('XMLtoJSON - start');
-	log(inputXML);
-	const trimWhitespace = trimOptions.trimWhitespace || true;
-	const trimNewlines = trimOptions.trimNewlines || true;
-	const trimTabs = trimOptions.trimTabs || true;
+export function XMLtoJSON(inputXML = '') {
+	// const console_debug = false;
+	// log('XMLtoJSON - start');
+	// log(inputXML);
 	let XMLdoc;
 	let XMLerror;
 
@@ -31,46 +29,55 @@ export function XMLtoJSON(inputXML = '', trimOptions = {}) {
 		throw XMLerror;
 	}
 
-	const error = XMLdoc.getElementsByTagName('parsererror');
+	const error = XMLdoc.getElementsByTagName('parserError'.toLowerCase());
 	if (error.length) {
 		const message = XMLdoc.getElementsByTagName('div')[0].innerHTML;
-		XMLerror = new SyntaxError(trim(message));
+		XMLerror = new SyntaxError(message);
 		throw XMLerror;
 	}
 
-	const result = {
-		name: XMLdoc.documentElement.nodeName,
-		attributes: tag_getAttributes(XMLdoc.documentElement.attributes),
-		content: tag_getContent(XMLdoc.documentElement),
-	};
-	log(result);
-	log('XMLtoJSON - end');
-	return result;
+	// const result = {
+	// 	name: XMLdoc.documentElement.nodeName,
+	// 	attributes: tag_getAttributes(XMLdoc.documentElement.attributes),
+	// 	content: tag_getContent(XMLdoc.documentElement),
+	// };
+	// log(result);
+	// log('XMLtoJSON - end');
+	return XMLdoc;
+}
+	/*
 
-	function tag_getContent(parent) {
+	interface xmlFragment {
+		childNodes: xmlFragment[];
+		nodeName: string;
+		nodeValue: string;
+		attributes: [];
+	}
+
+	function tag_getContent(
+		parent: xmlFragment
+	): (xmlNodeData | string)[] | string {
 		const kids = parent.childNodes;
-		log(`\ntag_getContent - ${parent.nodeName}`);
-		log(kids);
+		// log(`\ntag_getContent - ${parent.nodeName}`);
+		// log(kids);
 
-		if (kids.length === 0) return trim(parent.nodeValue);
+
 
 		const result = [];
-		let tagResult;
-		let tagContent;
+		let tagResult: xmlNodeData | string;
+		let tagContent: (xmlNodeData | string)[] | string;
 		let tagAttributes;
 
 		for (const node of kids) {
 			tagResult = {};
 			tagContent = tag_getContent(node);
 			tagAttributes = tag_getAttributes(node.attributes);
-
-			if (node.nodeName === '#text' && JSON.stringify(tagAttributes) === '{}') {
-				tagResult = trim(tagContent);
-			} else if (
-				node.nodeName === '#comment' &&
-				JSON.stringify(tagAttributes) === '{}'
-			) {
-				tagResult = `<!-- ${trim(tagContent)} -->`;
+			if (node.nodeName === '#text') {
+				tagResult.name = '#text';
+				tagResult.content = trim('' + tagContent);
+			} else if (node.nodeName === '#comment') {
+				tagResult.name = '#comment';
+				tagResult.content = `<!-- ${trim('' + tagContent)} -->`;
 			} else {
 				tagResult.name = node.nodeName;
 				tagResult.attributes = tagAttributes;
@@ -80,28 +87,30 @@ export function XMLtoJSON(inputXML = '', trimOptions = {}) {
 			if (tagResult !== '') result.push(tagResult);
 		}
 
-		log(`tag_getContent - ${parent.nodeName} \n`);
+		// log(`tag_getContent - ${parent.nodeName} \n`);
 		return result;
 	}
 
-	function tag_getAttributes(attributes) {
+	function tag_getAttributes(
+		attributes: { name: string; value: string }[]
+	): object {
 		if (!attributes || !attributes.length) return {};
 
-		log('\ntag_getAttributes');
-		log(attributes);
+		// log('\ntag_getAttributes');
+		// log(attributes);
 
 		const result = {};
 
 		for (const attribute of attributes) {
-			log(`\t${attribute.name} : ${attribute.value}`);
-			result[attribute.name] = trim(attribute.value);
+			// log(`\t${attribute.name} : ${attribute.value}`);
+			result['' + attribute.name] = trim(attribute.value);
 		}
 
-		log('tag_getAttributes\n');
+		// log('tag_getAttributes\n');
 		return result;
 	}
 
-	function trim(text) {
+	function trim(text: string): string {
 		try {
 			if (trimWhitespace) text = text.replace(/^\s+|\s+$/g, '');
 			if (trimNewlines) text = text.replace(/(\r\n|\n|\r)/gm, '');
@@ -112,7 +121,8 @@ export function XMLtoJSON(inputXML = '', trimOptions = {}) {
 		}
 	}
 
-	function log(text) {
+	function log(text: string) {
 		if (console_debug) console.log(text);
 	}
 }
+*/

@@ -21,12 +21,15 @@ pre {
 	font-family: monospace;
 	font-size: 1.2em;
 	border: 1px solid slategray;
-	height: calc(100vh - 200px);
-	overflow-y: scroll;
 	background-color: white;
 }
 
 button {
 	margin: 0px 10px 0px 0px;
 	padding: 2px 6px;
+}
+
+.table-wrapper {
+	overflow-y: scroll;
+	height: 80vh;
 }

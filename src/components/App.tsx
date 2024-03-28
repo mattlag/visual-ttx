@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { XMLtoJSON } from '../../src/lib/XMLtoJSON';
 import { FileInfo } from '../../src/main/files';
+import TableDisplay from './tables/TableDisplay';
 
 let loadedFile: FileInfo;
 export default function App() {
 	const [ttxData, setTtxData] = React.useState('<!--file contents-->');
-	const [jsonData, setJsonData] = React.useState({
-		name: 'test',
-		attributes: {},
-		content: [],
-	});
+	const [xmlDoc, setXmlDoc] = React.useState(new Document());
 
 	const appJsx = (
 		<>
@@ -21,9 +18,11 @@ export default function App() {
 			<button onClick={saveFontFile}>Save Font file</button>
 			<br></br>
 			<br></br>
-			{/*<CodeEditor ttxData={ttxData} setTtxData={setTtxData} />*/}
-			<div id="table-wrapper">
-				{jsonData.content.map(table => <h1 key={table.name}>{table.name}</h1>)}
+			<div className="table-wrapper">
+				{xmlDoc?.childNodes &&
+					Array.from(xmlDoc.childNodes)
+						.filter((node) => node.nodeName !== '#text')
+						.map((node) => <TableDisplay key={node.nodeName} data={node} />)}
 			</div>
 		</>
 	);
@@ -35,14 +34,9 @@ export default function App() {
 		console.log(loadedFile);
 		document.querySelector('h1').innerHTML = `vttx: ${loadedFile.name}`;
 		setTtxData(loadedFile.content);
-		const loadedData = XMLtoJSON(loadedFile.content);
-		console.log(loadedData);
-		setJsonData(loadedData);
-		console.log(jsonData);
-		const tableWrapper = document.getElementById('table-wrapper');
-		loadedData.content.forEach((tlNode) => {
-			console.log(tlNode.name);
-		});
+		const xmlDoc = XMLtoJSON(loadedFile.content).documentElement;
+		console.log(xmlDoc.childNodes);
+		setXmlDoc(xmlDoc);
 	}
 
 	function saveTTXFile() {
