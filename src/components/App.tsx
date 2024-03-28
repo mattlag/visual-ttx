@@ -23,8 +23,8 @@ export default function App() {
 			<main>
 				<div className="scroll-content">
 					{loadedFile?.name && <h1>{loadedFile.name}</h1>}
-					{xmlDoc?.childNodes &&
-						Array.from(xmlDoc.childNodes)
+					{xmlDoc?.children &&
+						Array.from(xmlDoc.children)
 							.filter((node) => node.nodeName !== '#text')
 							.map((node) => <TableDisplay key={node.nodeName} data={node} />)}
 				</div>
@@ -39,7 +39,7 @@ export default function App() {
 		console.log(loadedFile);
 		setTtxData(loadedFile.content);
 		const xmlDoc = XMLtoJSON(loadedFile.content).documentElement;
-		console.log(xmlDoc.childNodes);
+		console.log(xmlDoc.children);
 		setXmlDoc(xmlDoc);
 	}
 

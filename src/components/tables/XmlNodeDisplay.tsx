@@ -1,12 +1,13 @@
 import * as React from 'react';
+/*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
 
-export default function XmlNodeDisplay({ data }: { data: ChildNode }) {
+export default function XmlNodeDisplay({ data }: { data: Element }) {
 	console.log('\nXmlNodeDisplay');
 	console.log(data);
 
 	const value = trim(data.nodeValue);
 	const attributes = Array.from(data.attributes || []) || [];
-	const childNodes = Array.from(data.childNodes || []) || [];
+	const childNodes = Array.from(data.children || []) || [];
 
 	if (data.nodeName === '#comment') {
 		return (
