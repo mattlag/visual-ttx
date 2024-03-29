@@ -20,14 +20,12 @@ export default function App() {
 					<button onClick={saveFontFile}>Save Font file</button>
 				</div>
 			</header>
-			<main>
-				<div className="scroll-content">
-					{loadedFile?.name && <h1>{loadedFile.name}</h1>}
-					{xmlDoc?.children &&
-						Array.from(xmlDoc.children)
-							.filter((node) => node.nodeName !== '#text')
-							.map((node) => <TableDisplay key={node.nodeName} data={node} />)}
-				</div>
+			<main className="scroll-content">
+				{loadedFile?.name && <h1>{loadedFile.name}</h1>}
+				{xmlDoc?.children &&
+					Array.from(xmlDoc.children).map((node) => (
+						<TableDisplay key={node.nodeName} data={node} />
+					))}
 			</main>
 		</>
 	);
