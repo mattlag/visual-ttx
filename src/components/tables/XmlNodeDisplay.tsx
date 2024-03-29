@@ -8,31 +8,31 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 	if (data.nodeName === '#comment') {
 		// Comments
 		return (
-			<div className="xml-node-wrapper xml-comment-wrapper">
-				&lt;!--{data.nodeValue}--&gt;
-			</div>
+			<div className="xml-node xml-comment">&lt;!--{data.nodeValue}--&gt;</div>
 		);
 	} else if (data.nodeName === '#text') {
 		// Text
 		const value = trim(data.nodeValue);
 		if (!value.length) return null;
-		else return <pre className="xml-value-wrapper">{value}</pre>;
+		else return <pre className="xml-value">{value}</pre>;
 	} else {
 		// Elements
 		const attributes = Array.from(data.attributes || []) || [];
 		const childNodes = Array.from(data.childNodes || []) || [];
 		return (
-			<article className="xml-node-wrapper">
+			<article className="xml-node">
 				<h3>{data.nodeName}</h3>
 				{attributes.length
 					? attributes.map((attr) => (
-							<span key={attr.name} className="xml-attribute-wrapper">
-								{attr.name}: {attr.value}
+							<span key={attr.name} className="xml-attribute">
+								<span className="xml-attribute-piece">{attr.name}</span>
+								<span className="xml-attribute-separator">:</span>
+								<span className="xml-attribute-piece">{attr.value}</span>
 							</span>
 					  ))
 					: null}
 				{childNodes.length
-					? childNodes.map((node:Element, index:number) => (
+					? childNodes.map((node: Element, index: number) => (
 							<XmlNodeDisplay key={index} data={node} />
 					  ))
 					: null}
