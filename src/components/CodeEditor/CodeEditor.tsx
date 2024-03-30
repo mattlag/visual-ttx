@@ -13,7 +13,7 @@ export default function CodeEditor({ ttxData, setTtxData }: CodeEditor) {
 	return (
 		<CodeMirror
 			value={ttxData}
-			height="80vh"
+			height="100%"
 			extensions={[xml()]}
 			onChange={(value) => {
 				setTtxData(value);
