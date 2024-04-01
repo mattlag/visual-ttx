@@ -11,13 +11,16 @@ export default function CodeEditor({ ttxData, setTtxData }: CodeEditor) {
 	// console.log(`CodeEditor got ${ttxData}`);
 
 	return (
-		<CodeMirror
-			value={ttxData}
-			height="100%"
-			extensions={[xml()]}
-			onChange={(value) => {
-				setTtxData(value);
-			}}
-		/>
+		<div className="scroll-content">
+			<br></br>
+			<CodeMirror
+				value={ttxData}
+				height="100%"
+				extensions={[xml()]}
+				onChange={(value) => {
+					setTtxData(value);
+				}}
+			/>
+		</div>
 	);
 }

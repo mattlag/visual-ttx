@@ -65,17 +65,19 @@ header {
 	margin-top: 10px;
 	padding: 6px 20px 7px 20px;
 	border-radius: 8px 8px 0px 0px;
-	color: hsl(var(--accent-hue), 30%, 25%);
-	background-color: hsl(var(--accent-hue), 30%, 75%);
-	box-shadow: inset 0px -3px 10px 1px hsla(var(--accent-hue), 30%, 10%, 20%);
+	color: hsl(var(--accent-hue), 50%, 50%);
+	background-color: transparent;
+}
+
+#app-tabs button:hover {
+	background-color: hsla(var(--accent-hue), 100%, 100%, 0.1);
 }
 
 #app-tabs button.selected {
-	color: hsl(var(--accent-hue), 100%, 30%);
+	color: hsl(var(--accent-hue), 100%, 20%);
 	padding-bottom: 8px;
 	background-color: hsl(var(--accent-hue), 30%, 95%);
 	box-shadow: none;
-
 }
 
 #app-actions {
@@ -100,7 +102,48 @@ header {
 .scroll-content {
 	overflow-y: scroll;
 	height: calc(100vh - 80px);
-	padding: 30px 20px 20px 20px;
+	padding: 0px 20px 20px 20px;
+}
+
+/*
+	Tables and tabs
+*/
+.table-layout {
+	display: grid;
+	grid-template-columns: min-content 1fr;
+}
+
+.table-layout-tabs {
+	padding: 20px 20px 0px 18px;
+}
+
+.table-layout-table {
+	margin-top: 10px;
+}
+
+.table-tab {
+	font-size: 1.2em;
+	padding: 5px 10px;
+	display: block;
+	border: 0px;
+	color: hsl(var(--accent-hue), 100%, 20%);
+	border: 1px solid transparent;
+	background-color: transparent;
+	margin-bottom: 10px;
+}
+
+.table-tab:hover {
+	color: hsl(var(--accent-hue), 100%, 30%);
+	background-color: hsl(var(--accent-hue), 100%, 90%);
+	border-color: hsl(var(--accent-hue), 100%, 50%);
+}
+
+.table-tab-selected,
+.table-tab-selected:hover {
+	color: hsl(var(--accent-hue), 100%, 80%);
+	background-color: hsl(var(--accent-hue), 30%, 25%);
+	border-color: hsl(var(--accent-hue), 30%, 25%);
+	cursor: default;
 }
 
 /*
@@ -109,12 +152,12 @@ header {
 
 .xml-table {
 	padding: 5px 4px 10px 0px;
-	margin: 40px 10px 40px 0px;
+	margin: 20px 10px 40px 0px;
 	max-width: 90vw;
 }
 
 .xml-table h2 {
-	margin: 5px 0px 10px 0px;
+	margin: 0px 0px 10px 0px;
 	padding: 0px 0px 10px 0px;
 	border-bottom: 1px solid hsl(var(--accent-hue), 30%, 60%);
 	color: hsl(var(--accent-hue), 30%, 40%);

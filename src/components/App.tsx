@@ -3,20 +3,28 @@ import { xmlTextToDoc } from '../../src/lib/xmlTextToDoc';
 import { FileInfo } from '../../src/main/files';
 import CodeEditor from './CodeEditor/CodeEditor';
 import TableDisplay from './tables/TableDisplay';
+import TableTabs from './tables/TableTabs';
 
 let loadedFile: FileInfo;
 export default function App() {
-	const [ttxData, setTtxData] = React.useState('<!--file contents-->');
+	const [ttxData, setTtxData] = React.useState('<!-- load a file -->');
 	const [xmlDoc, setXmlDoc] = React.useState(new Document());
-	const [selectedTab, selectTab] = React.useState('visual');
+	const [selectedEditorTab, selectEditorTab] = React.useState('visual');
+	const [selectedTableTab, selectTableTab] = React.useState('_load_file_');
 
 	const visualTabContents = (
 		<>
-			{loadedFile?.name && <h1>{loadedFile.name}</h1>}
-			{xmlDoc?.children &&
-				Array.from(xmlDoc.children).map((node) => (
-					<TableDisplay key={node.nodeName} data={node} />
-				))}
+			<div className="table-layout">
+				<TableTabs
+					xmlDoc={xmlDoc}
+					selectedTableTab={'' + selectedTableTab}
+					selectTableTab={selectTableTab}
+				/>
+				<TableDisplay
+					xmlDoc={xmlDoc}
+					selectedTableTab={'' + selectedTableTab}
+				/>
+			</div>
 		</>
 	);
 
@@ -41,14 +49,20 @@ export default function App() {
 					</button>
 				</div>
 				<div id="app-actions">
-					<button onClick={loadFile}>Load a file</button>
+					<button onClick={loadFile} title="Load a file">
+						<img src="action_open_file.svg"></img>
+					</button>
 					<span>&emsp;</span>
-					<button onClick={saveTTXFile}>Save XML file</button>
-					<button onClick={saveFontFile}>Save Font file</button>
+					<button onClick={saveTTXFile} title="Save XML file">
+						<img src="action_save_ttx.svg"></img>
+					</button>
+					<button onClick={saveFontFile} title="Save Font file">
+						<img src="action_save_otf.svg"></img>
+					</button>
 				</div>
 			</header>
-			<main className="scroll-content">
-				{selectedTab === 'visual' ? visualTabContents : xmlTabContents}
+			<main>
+				{selectedEditorTab === 'visual' ? visualTabContents : xmlTabContents}
 			</main>
 		</>
 	);
@@ -62,6 +76,7 @@ export default function App() {
 		const xmlDoc = xmlTextToDoc(loadedFile.content).documentElement;
 		console.log(xmlDoc.children);
 		setXmlDoc(xmlDoc);
+		selectTableTab('GlyphOrder');
 	}
 
 	function saveTTXFile() {
@@ -81,12 +96,12 @@ export default function App() {
 	}
 
 	function handleClickOnTabVisual() {
-		selectTab('visual');
+		selectEditorTab('visual');
 		document.getElementById('tab-visual').classList.add('selected');
 		document.getElementById('tab-xml').classList.remove('selected');
 	}
 	function handleClickOnTabXML() {
-		selectTab('xml');
+		selectEditorTab('xml');
 		document.getElementById('tab-xml').classList.add('selected');
 		document.getElementById('tab-visual').classList.remove('selected');
 	}

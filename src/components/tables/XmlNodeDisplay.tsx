@@ -12,8 +12,14 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 		);
 	} else if (data.nodeName === '#text') {
 		// Text
-		const value = trim(data.nodeValue);
-		if (!value.length) return null;
+		const value = trim('' + data.nodeValue);
+
+		if (
+			value.length === 0 &&
+			tablesThatShouldHaveWhitespace.includes(data.parentElement.nodeName)
+		) {
+			return <pre className="xml-value"></pre>;
+		} else if (!value.length) return null;
 		else return <pre className="xml-value">{value}</pre>;
 	} else {
 		// Elements
@@ -53,3 +59,6 @@ function trim(text: string): string {
 		return '';
 	}
 }
+
+// cSpell:disable
+const tablesThatShouldHaveWhitespace = ['namerecord'];
