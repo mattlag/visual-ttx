@@ -9,6 +9,7 @@ export default defineConfig((env) => {
   const name = forgeConfigSelf.name ?? '';
 
   return {
+    assetsInclude: ['**/*.svg'],
     root,
     mode,
     base: './',

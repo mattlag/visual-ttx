@@ -3,11 +3,7 @@
 */
 
 :root {
-	--accent-blue-light: hsl(180, 100%, 75%);
-	--accent-blue-dark: hsl(190, 100%, 25%);
-	--accent-green-light: hsl(160, 100%, 50%);
-	--accent-green-dark: hsl(150, 100%, 20%);
-	--accent-hue: 200;
+	--accent-hue: 170;
 }
 
 * {
@@ -53,14 +49,8 @@ button {
 header {
 	display: grid;
 	grid-template-columns: min-content 1fr 1fr;
-	background-color: var(--accent-green-dark);
-	background-image: linear-gradient(
-		to right,
-		var(--accent-green-dark),
-		var(--accent-blue-dark)
-	);
-	box-shadow: inset 0px -4px 10px 2px hsla(var(--accent-hue), 30%, 10%, 50%);
-	color: white;
+	background-color: hsl(var(--accent-hue), 20%, 20%);
+	color: hsla(var(--accent-hue), 100%, 80%);
 	padding: 10px 10px 10px 20px;
 	z-index: 1000;
 }
@@ -77,11 +67,11 @@ header {
 	border-radius: 8px 8px 0px 0px;
 	color: hsl(var(--accent-hue), 30%, 25%);
 	background-color: hsl(var(--accent-hue), 30%, 75%);
-	box-shadow: inset 0px -3px 10px 1px hsla(var(--accent-hue), 30%, 10%, 30%);
+	box-shadow: inset 0px -3px 10px 1px hsla(var(--accent-hue), 30%, 10%, 20%);
 }
 
 #app-tabs button.selected {
-	color: hsl(var(--accent-hue), 100%, 40%);
+	color: hsl(var(--accent-hue), 100%, 30%);
 	padding-bottom: 8px;
 	background-color: hsl(var(--accent-hue), 30%, 95%);
 	box-shadow: none;
@@ -95,6 +85,16 @@ header {
 
 #app-actions button {
 	margin-top: 10px;
+	background-color: transparent;
+	border-color: transparent;
+	font-family: monospace;
+	color: hsl(var(--accent-hue), 100%, 50%);
+	line-height: 20px;
+}
+
+#app-actions button img {
+	height: 20px;
+	width: 20px;
 }
 
 .scroll-content {
@@ -124,7 +124,7 @@ header {
 .xml-node {
 	border-left: 1px solid hsl(var(--accent-hue), 30%, 80%);
 	padding: 0px 10px 0px 20px;
-	margin: 20px 0px 10px 2px;
+	margin: 10px 0px 10px 2px;
 }
 
 .xml-node h3 {
@@ -165,6 +165,6 @@ header {
 
 .xml-comment {
 	font-family: monospace;
-	color: var(--accent-green-dark);
+	color: hsl(var(--accent-hue), 100%, 20%);
 	font-size: 1.2em;
 }
