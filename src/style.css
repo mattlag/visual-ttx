@@ -35,6 +35,23 @@ button {
 	cursor: pointer;
 }
 
+button[disabled] {
+	cursor:default;
+	opacity: 0.2;
+}
+
+code {
+	font-family: monospace;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 4px 8px;
+	margin: 4px;
+	background-color: hsl(var(--accent-hue), 50%, 90%);
+	border: 1px solid hsl(var(--accent-hue), 50%, 80%);
+	border-radius: 4px;
+	display: inline-block;
+}
+
 /*
 	Page Layout
 */
@@ -103,6 +120,27 @@ header {
 	overflow-y: scroll;
 	height: calc(100vh - 80px);
 	padding: 0px 20px 20px 20px;
+}
+
+#load-file-drop-area {
+	width: 100vw;
+	height: calc(100vh - 60px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+}
+
+#load-file-drop-area img {
+	width: 100px;
+	height: 100px;
+	filter: saturate(0.2) brightness(1.15);
+}
+
+#load-file-drop-area div {
+	width: 340px;
+	text-align: center;
 }
 
 /*

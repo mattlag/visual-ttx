@@ -10,7 +10,7 @@ export default function TableTabs({
 	selectTableTab: (tabName: string) => void;
 }) {
 	if (selectedTableTab === '_load_file_') {
-		return null;
+		return <span></span>;
 	} else {
 		return (
 			<div className='table-layout-tabs'>

@@ -7,7 +7,7 @@
 const { contextBridge, ipcRenderer } = require('electron'); //eslint-disable-line
 
 const api = {
-	handleLoadFile: () => ipcRenderer.invoke('handleLoadFile'),
+	handleLoadFile: (args) => ipcRenderer.invoke('handleLoadFile', args),
 	handleSaveTTXFile: (args) => ipcRenderer.invoke('handleSaveTTXFile', args),
 	handleSaveFontFile: (args) => ipcRenderer.invoke('handleSaveFontFile', args),
 };

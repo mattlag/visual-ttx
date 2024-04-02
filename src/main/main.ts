@@ -10,7 +10,7 @@ import {
 declare global {
 	interface Window {
 		vttxApi?: {
-			handleLoadFile?: () => FileInfo;
+			handleLoadFile?: (filePath?: string) => FileInfo;
 			handleSaveTTXFile?: (fileInfo: FileInfo) => void;
 			handleSaveFontFile?: (fileInfo: FileInfo) => void;
 		};
@@ -55,12 +55,16 @@ app.whenReady().then(() => {
 	/*
 	 * IPC Handlers
 	 */
-	ipcMain.handle('handleLoadFile', handleLoadFile);
+	ipcMain.handle('handleLoadFile', async (event, args) => {
+		console.log(`MAIN.TS handleLoadFile`);
+		console.log(args);
+		return await handleLoadFile(args);
+	});
 	ipcMain.handle('handleSaveTTXFile', async (event, args) => {
-		await handleSaveTTXFile(args);
+		return await handleSaveTTXFile(args);
 	});
 	ipcMain.handle('handleSaveFontFile', async (event, args) => {
-		await handleSaveFontFile(args);
+		return await handleSaveFontFile(args);
 	});
 
 	/*

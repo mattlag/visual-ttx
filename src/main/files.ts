@@ -10,27 +10,39 @@ export interface FileInfo {
 	suffix?: string;
 }
 
-export async function handleLoadFile() {
+
+export async function handleLoadFile(filePath?: string) {
+	console.log(`FILES.TS handleLoadFile`);
+	console.log(`filepath: ${filePath}`);
 	const ttxExtensions = ['ttx', 'otx', 'xml'];
 	const fontExtensions = ['otf', 'ttf', 'woff', 'woff2'];
 	const result: FileInfo = {};
+	let canceled = true;
+	let filePaths: string[] = [];
 
-	const { canceled, filePaths } = await dialog.showOpenDialog({
-		title: 'Select a font file or a TTX XML file',
-		filters: [
-			{ name: 'Font files', extensions: fontExtensions },
-			{ name: 'TTX XML files', extensions: ttxExtensions },
-		],
-	});
+	if (!filePath) {
+		const openDialogResult = await dialog.showOpenDialog({
+			title: 'Select a font file or a TTX XML file',
+			filters: [
+				{ name: 'Font files', extensions: fontExtensions },
+				{ name: 'TTX XML files', extensions: ttxExtensions },
+			],
+		});
 
-	if (canceled) {
-		result.message = 'Canceled';
-		return result;
+		console.log('openDialogResult');
+		console.log(openDialogResult);
+
+		canceled = openDialogResult.canceled;
+		filePaths = openDialogResult.filePaths;
+		if (canceled) {
+			result.message = 'Canceled';
+			return result;
+		}
 	}
 
-	const stringPath = filePaths[0];
+	const stringPath = filePath || filePaths[0];
 	result.path = stringPath;
-	console.log(stringPath);
+	console.log(`stringPath: ${stringPath}`);
 
 	const suffix = getSuffix(stringPath);
 	result.suffix = suffix;
@@ -53,6 +65,7 @@ export async function handleLoadFile() {
 
 	console.log(message);
 	result.message = message;
+	console.log(result.content.length);
 	return result;
 }
 
@@ -72,6 +85,9 @@ export async function handleSaveTTXFile(fileInfo: FileInfo) {
 	if (getSuffix(filePath) !== 'ttx') resolvedFilePath += '.ttx';
 	if (!canceled) {
 		fs.writeFileSync(resolvedFilePath, fileInfo.content);
+		return 'File saved';
+	} else {
+		return 'Canceled';
 	}
 }
 
@@ -89,6 +105,9 @@ export async function handleSaveFontFile(fileInfo: FileInfo) {
 
 	if (!canceled) {
 		fs.writeFileSync(filePath, fontBuffer);
+		return 'File saved';
+	} else {
+		return 'Canceled';
 	}
 }
 
