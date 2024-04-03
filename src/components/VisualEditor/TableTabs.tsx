@@ -17,7 +17,10 @@ export default function TableTabs({
 				{xmlDoc.children &&
 					Array.from(xmlDoc.children).map((node, index) => (
 						<button
-							onClick={() => selectTableTab(node.nodeName)}
+							onClick={() => {
+								selectTableTab(node.nodeName);
+								document.querySelector('.table-layout-table').scrollTop = 0;
+							}}
 							className={
 								node.nodeName === selectedTableTab
 									? 'table-tab table-tab-selected'

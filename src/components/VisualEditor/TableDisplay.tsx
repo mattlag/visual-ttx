@@ -58,43 +58,43 @@ export default function TableDisplay({
 	}
 
 	async function handleDrop(event?: React.DragEvent) {
-		console.log(`TABLEDISPLAY.TSX handleDrop`);
+		// console.log(`TABLEDISPLAY.TSX handleDrop`);
 		event.preventDefault();
 		event.stopPropagation();
 
 		const pathResult = event?.dataTransfer?.files[0]?.path;
 		let fileResult;
-		console.log(pathResult);
+		// console.log(pathResult);
 		if (pathResult) {
-			console.log(`starting handleLoadFile...`);
+			// console.log(`starting handleLoadFile...`);
 			fileResult = await window.vttxApi.handleLoadFile(pathResult);
 		} else {
 			fileResult = await window.vttxApi.handleLoadFile();
 		}
 
-		console.log(`fileResult:`);
-		console.log(fileResult);
+		// console.log(`fileResult:`);
+		// console.log(fileResult);
 		if (fileResult) {
-			console.log(fileCtx);
-			fileCtx.markAsLoadedFile(fileResult);
+			// console.log(fileCtx);
+			fileCtx.setupLoadedFile(fileResult);
 		}
 	}
 
 	function handleDragOver(event: React.DragEvent) {
 		event.preventDefault();
 		event.stopPropagation();
-		console.log('File is OVER the Drop Space');
+		// console.log('File is OVER the Drop Space');
 	}
 
 	function handleDragEnter(event: React.DragEvent) {
 		event.preventDefault();
 		event.stopPropagation();
-		console.log('File has ENTERED the Drop Space');
+		// console.log('File has ENTERED the Drop Space');
 	}
 
 	function handleDragLeave(event: React.DragEvent) {
 		event.preventDefault();
 		event.stopPropagation();
-		console.log('File has left the Drop Space');
+		// console.log('File has left the Drop Space');
 	}
 }

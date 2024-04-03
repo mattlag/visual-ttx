@@ -2,24 +2,25 @@ import * as React from 'react';
 import { xmlTextToDoc } from '../../src/lib/xmlTextToDoc';
 import { FileInfo } from '../../src/main/files';
 import CodeEditor from './CodeEditor/CodeEditor';
-import TableDisplay from './tables/TableDisplay';
-import TableTabs from './tables/TableTabs';
+import DropTarget from './DropTarget';
+import TableDisplay from './VisualEditor/TableDisplay';
+import TableTabs from './VisualEditor/TableTabs';
 
 export const loadedFileContext = React.createContext(null);
 
-const defaultFileInfo: FileInfo = {
-	message: '-not-loaded-',
-};
-
 export default function App() {
-	const [isFileLoaded, setIsFileLoaded] = React.useState(false);
-	const [ttxData, setTtxData] = React.useState('<!-- load a file -->');
+	// File data
 	const [xmlDoc, setXmlDoc] = React.useState(new Document());
+	const [loadedFilePath, setLoadedFilePath] = React.useState('');
+
+	// UI states
+	const [isFileLoaded, setIsFileLoaded] = React.useState(false);
 	const [selectedEditorTab, selectEditorTab] = React.useState('visual');
-	const [selectedTableTab, selectTableTab] = React.useState('_load_file_');
+	const [selectedTableTab, selectTableTab] = React.useState('GlyphOrder');
 
-	const [loadedFile, setLoadedFile] = React.useState(defaultFileInfo);
-
+	/*
+		Visual-style editor
+	*/
 	const visualTabContents = (
 		<>
 			<div className="table-layout">
@@ -36,15 +37,45 @@ export default function App() {
 		</>
 	);
 
+	function handleClickOnTabVisual() {
+		selectEditorTab('visual');
+		document.getElementById('tab-visual').classList.add('selected');
+		document.getElementById('tab-xml').classList.remove('selected');
+	}
+
+	function handleClickOnTabXML() {
+		selectEditorTab('xml');
+		document.getElementById('tab-xml').classList.add('selected');
+		document.getElementById('tab-visual').classList.remove('selected');
+	}
+
+	/*
+		Code-style editor
+	*/
 	const xmlTabContents = (
-		<CodeEditor ttxData={ttxData} setTtxData={setTtxData} />
+		<CodeEditor ttxData={getXmlAsText()} setTtxData={setXmlDocFromText} />
 	);
 
+	function getXmlAsText() {
+		const xmlString = new XMLSerializer().serializeToString(xmlDoc);
+		return xmlString;
+	}
+
+	function setXmlDocFromText(xmlString: string) {
+		const xmlDoc = xmlTextToDoc(xmlString);
+		setXmlDoc(xmlDoc);
+	}
+
+	/*
+		Overall app skeleton
+	*/
 	const appJsx = (
 		<>
-			<loadedFileContext.Provider value={{ loadFile, markAsLoadedFile }}>
+			<loadedFileContext.Provider value={{ loadFile, setupLoadedFile }}>
 				<header>
-					<h1 id="app-title">vttx</h1>
+					<h1 id="app-title" title={loadedFilePath}>
+						vttx
+					</h1>
 					<div id="app-tabs">
 						{isFileLoaded && (
 							<>
@@ -69,7 +100,7 @@ export default function App() {
 						<button onClick={loadFile} title="Load a file">
 							<img src="action_open_file.svg"></img>
 						</button>
-						<span>&emsp;</span>
+						<span>&emsp; </span>
 						<button
 							onClick={saveTTXFile}
 							disabled={!isFileLoaded}
@@ -87,62 +118,67 @@ export default function App() {
 					</div>
 				</header>
 				<main>
-					{selectedEditorTab === 'visual' ? visualTabContents : xmlTabContents}
+					{isFileLoaded ? (
+						selectedEditorTab === 'visual' ? (
+							visualTabContents
+						) : (
+							xmlTabContents
+						)
+					) : (
+						<DropTarget></DropTarget>
+					)}
 				</main>
 			</loadedFileContext.Provider>
 		</>
 	);
 
+	/*
+		Loading files
+	*/
 	async function loadFile() {
-		const fileResult = await window.vttxApi.handleLoadFile();
-		console.log(fileResult);
-		await markAsLoadedFile(fileResult);
+		const fileInfo = await window.vttxApi.handleLoadFile();
+		// console.log(fileInfo);
+		await setupLoadedFile(fileInfo);
 	}
 
+	async function setupLoadedFile(fileInfo: FileInfo) {
+		// console.log(`APP.TSX setupLoadedFile`);
+		// console.log(`Passed file:`);
+		// console.log(fileInfo);
+
+		// Set the Path
+		setLoadedFilePath(fileInfo.path);
+
+		// Set the XML Doc
+		const xmlDoc = xmlTextToDoc(fileInfo.content).documentElement;
+		setXmlDoc(xmlDoc);
+
+		// Reset UI states
+		selectTableTab('GlyphOrder');
+		setIsFileLoaded(true);
+	}
+
+	/*
+		Saving files
+	*/
 	function saveTTXFile() {
-		console.log('saveTTXFile');
+		// console.log('saveTTXFile');
 		const loadedFile = React.useContext(loadedFileContext);
-		console.log(loadedFile);
+		// console.log(loadedFile);
 		const saveFile = loadedFile;
-		saveFile.content = ttxData;
+		saveFile.content = getXmlAsText();
 		const result = window.vttxApi.handleSaveTTXFile(saveFile);
 		console.log(result);
 	}
 
 	function saveFontFile() {
-		console.log('saveFontFile');
+		// console.log('saveFontFile');
 		const loadedFile = React.useContext(loadedFileContext);
-		console.log(loadedFile);
+		// console.log(loadedFile);
 		const saveFile = loadedFile;
-		saveFile.content = ttxData;
+		saveFile.content = getXmlAsText();
 		const result = window.vttxApi.handleSaveFontFile(saveFile);
 		console.log(result);
-	}
-
-	function handleClickOnTabVisual() {
-		selectEditorTab('visual');
-		document.getElementById('tab-visual').classList.add('selected');
-		document.getElementById('tab-xml').classList.remove('selected');
-	}
-	function handleClickOnTabXML() {
-		selectEditorTab('xml');
-		document.getElementById('tab-xml').classList.add('selected');
-		document.getElementById('tab-visual').classList.remove('selected');
-	}
-
-	async function markAsLoadedFile(file: FileInfo) {
-		console.log(`APP.TSX markAsLoadedFile`);
-		console.log(`Passed file:`);
-		console.log(file);
-		setLoadedFile({ ...file });
-		console.log(`after setLoadedFile:`);
-		console.log(loadedFile);
-		setTtxData(loadedFile.content);
-		const xmlDoc = xmlTextToDoc(loadedFile.content).documentElement;
-		console.log(xmlDoc.children);
-		setXmlDoc(xmlDoc);
-		selectTableTab('GlyphOrder');
-		setIsFileLoaded(true);
 	}
 
 	return appJsx;

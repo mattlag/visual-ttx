@@ -2,8 +2,8 @@ import * as React from 'react';
 /*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
 
 export default function XmlNodeDisplay({ data }: { data: Element }) {
-	console.log(`\nXmlNodeDisplay: ${data.nodeName}`);
-	console.log(data);
+	// console.log(`\nXmlNodeDisplay: ${data.nodeName}`);
+	// console.log(data);
 
 	if (data.nodeName === '#comment') {
 		// Comments
