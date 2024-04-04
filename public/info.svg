@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+  <path d="M0,0 H20 V20 H0 V0Z" style="fill: transparent;"/>
+  <path d="M10,0C4.477,0,0,4.477,0,10s4.477,10,10,10,10-4.477,10-10S15.523,0,10,0ZM11.562,18h-3.125v-10h3.125v10ZM11.562,6h-3.125v-3h3.125v3Z" style="fill: #00ffd4; stroke-width: 0px;"/>
+</svg>

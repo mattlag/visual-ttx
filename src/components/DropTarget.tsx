@@ -17,7 +17,7 @@ export default function DropTarget() {
 				To load a file, drag+drop one here,
 				<br></br>
 				or&nbsp;
-				<a href="" onClick={vttxCtx.loadFile}>
+				<a href="" onClick={handleClickOpenFileChooser}>
 					launch a file chooser
 				</a>
 				.
@@ -34,6 +34,16 @@ export default function DropTarget() {
 			</div>
 		</div>
 	);
+
+	async function handleClickOpenFileChooser() {
+		// const fileResult = await window.vttxApi.handleLoadFile();
+		// console.log(`fileResult:`);
+		// console.log(fileResult);
+		// if (fileResult) {
+		// 	vttxCtx.setupLoadedFile(fileResult);
+		// }
+		vttxCtx.loadFile();
+	}
 
 	async function handleDrop(event?: React.DragEvent) {
 		// console.log(`DropTarget.TSX handleDrop`);
