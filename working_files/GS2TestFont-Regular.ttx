@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?><ttFont sfntVersion="OTTO" ttLibVersion="4.42">
+
+  <GlyphOrder>
+    <!-- The 'id' attribute is only for humans; it is ignored when parsed. -->
+    <GlyphID id="0" name=".notdef"/>
+    <GlyphID id="1" name="space"/>
+    <GlyphID id="2" name="A"/>
+    <GlyphID id="3" name="B"/>
+    <GlyphID id="4" name="C"/>
+    <GlyphID id="5" name="lig.A.B"/>
+  </GlyphOrder>
+
+  <head>
+    <!-- Most of this table will be recalculated by the compiler -->
+    <tableVersion value="1.0"/>
+    <fontRevision value="1.0"/>
+    <checkSumAdjustment value="0x434d02d9"/>
+    <magicNumber value="0x5f0f3cf5"/>
+    <flags value="00000000 00000011"/>
+    <unitsPerEm value="1000"/>
+    <created value="Thu Mar 28 18:35:01 2024"/>
+    <modified value="Thu Mar 28 18:35:01 2024"/>
+    <xMin value="0"/>
+    <yMin value="-2"/>
+    <xMax value="645"/>
+    <yMax value="790"/>
+    <macStyle value="00000000 00000000"/>
+    <lowestRecPPEM value="3"/>
+    <fontDirectionHint value="2"/>
+    <indexToLocFormat value="0"/>
+    <glyphDataFormat value="0"/>
+  </head>
+
+  <hhea>
+    <tableVersion value="0x00010000"/>
+    <ascent value="800"/>
+    <descent value="-200"/>
+    <lineGap value="0"/>
+    <advanceWidthMax value="655"/>
+    <minLeftSideBearing value="0"/>
+    <minRightSideBearing value="0"/>
+    <xMaxExtent value="0"/>
+    <caretSlopeRise value="1"/>
+    <caretSlopeRun value="0"/>
+    <caretOffset value="0"/>
+    <reserved0 value="0"/>
+    <reserved1 value="0"/>
+    <reserved2 value="0"/>
+    <reserved3 value="0"/>
+    <metricDataFormat value="0"/>
+    <numberOfHMetrics value="6"/>
+  </hhea>
+
+  <maxp>
+    <tableVersion value="0x5000"/>
+    <numGlyphs value="6"/>
+  </maxp>
+
+  <OS_2>
+    <!-- The fields 'usFirstCharIndex' and 'usLastCharIndex'
+         will be recalculated by the compiler -->
+    <version value="3"/>
+    <xAvgCharWidth value="450"/>
+    <usWeightClass value="400"/>
+    <usWidthClass value="5"/>
+    <fsType value="00000000 00000000"/>
+    <ySubscriptXSize value="650"/>
+    <ySubscriptYSize value="699"/>
+    <ySubscriptXOffset value="0"/>
+    <ySubscriptYOffset value="140"/>
+    <ySuperscriptXSize value="650"/>
+    <ySuperscriptYSize value="699"/>
+    <ySuperscriptXOffset value="0"/>
+    <ySuperscriptYOffset value="479"/>
+    <yStrikeoutSize value="49"/>
+    <yStrikeoutPosition value="258"/>
+    <sFamilyClass value="0"/>
+    <panose>
+      <bFamilyType value="0"/>
+      <bSerifStyle value="0"/>
+      <bWeight value="0"/>
+      <bProportion value="0"/>
+      <bContrast value="0"/>
+      <bStrokeVariation value="0"/>
+      <bArmStyle value="0"/>
+      <bLetterForm value="0"/>
+      <bMidline value="0"/>
+      <bXHeight value="0"/>
+    </panose>
+    <ulUnicodeRange1 value="00000000 00000000 00000000 00000001"/>
+    <ulUnicodeRange2 value="00000000 00000000 00000000 00000000"/>
+    <ulUnicodeRange3 value="00000000 00000000 00000000 00000000"/>
+    <ulUnicodeRange4 value="00000000 00000000 00000000 00000000"/>
+    <achVendID value="XXXX"/>
+    <fsSelection value="00000000 01000000"/>
+    <usFirstCharIndex value="32"/>
+    <usLastCharIndex value="67"/>
+    <sTypoAscender value="800"/>
+    <sTypoDescender value="-200"/>
+    <sTypoLineGap value="0"/>
+    <usWinAscent value="790"/>
+    <usWinDescent value="2"/>
+    <ulCodePageRange1 value="00000000 00000000 00000000 00000001"/>
+    <ulCodePageRange2 value="00000000 00000000 00000000 00000000"/>
+    <sxHeight value="400"/>
+    <sCapHeight value="790"/>
+    <usDefaultChar value="32"/>
+    <usBreakChar value="32"/>
+    <usMaxContext value="0"/>
+  </OS_2>
+
+  <name>
+    <namerecord nameID="0" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="1" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      GS2 Test Font
+    </namerecord>
+    <namerecord nameID="2" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      Regular
+    </namerecord>
+    <namerecord nameID="3" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       :GS2 Test Font Regular
+    </namerecord>
+    <namerecord nameID="4" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      GS2 Test Font Regular
+    </namerecord>
+    <namerecord nameID="5" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      1.0
+    </namerecord>
+    <namerecord nameID="6" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      GS2TestFontRegular
+    </namerecord>
+    <namerecord nameID="7" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="8" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="9" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="10" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="11" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="12" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="13" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="14" platformID="1" platEncID="0" langID="0x0" unicode="True">
+       
+    </namerecord>
+    <namerecord nameID="16" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      GS2 Test Font
+    </namerecord>
+    <namerecord nameID="17" platformID="1" platEncID="0" langID="0x0" unicode="True">
+      Regular
+    </namerecord>
+    <namerecord nameID="0" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="1" platformID="3" platEncID="1" langID="0x409">
+      GS2 Test Font
+    </namerecord>
+    <namerecord nameID="2" platformID="3" platEncID="1" langID="0x409">
+      Regular
+    </namerecord>
+    <namerecord nameID="3" platformID="3" platEncID="1" langID="0x409">
+       :GS2 Test Font Regular
+    </namerecord>
+    <namerecord nameID="4" platformID="3" platEncID="1" langID="0x409">
+      GS2 Test Font Regular
+    </namerecord>
+    <namerecord nameID="5" platformID="3" platEncID="1" langID="0x409">
+      1.0
+    </namerecord>
+    <namerecord nameID="6" platformID="3" platEncID="1" langID="0x409">
+      GS2TestFontRegular
+    </namerecord>
+    <namerecord nameID="7" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="8" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="9" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="10" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="11" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="12" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="13" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="14" platformID="3" platEncID="1" langID="0x409">
+       
+    </namerecord>
+    <namerecord nameID="16" platformID="3" platEncID="1" langID="0x409">
+      GS2 Test Font
+    </namerecord>
+    <namerecord nameID="17" platformID="3" platEncID="1" langID="0x409">
+      Regular
+    </namerecord>
+  </name>
+
+  <cmap>
+    <tableVersion version="0"/>
+    <cmap_format_4 platformID="3" platEncID="1" language="0">
+      <map code="0x20" name="space"/><!-- SPACE -->
+      <map code="0x41" name="A"/><!-- LATIN CAPITAL LETTER A -->
+      <map code="0x42" name="B"/><!-- LATIN CAPITAL LETTER B -->
+      <map code="0x43" name="C"/><!-- LATIN CAPITAL LETTER C -->
+    </cmap_format_4>
+  </cmap>
+
+  <post>
+    <formatType value="3.0"/>
+    <italicAngle value="0.0"/>
+    <underlinePosition value="0"/>
+    <underlineThickness value="0"/>
+    <isFixedPitch value="0"/>
+    <minMemType42 value="0"/>
+    <maxMemType42 value="0"/>
+    <minMemType1 value="0"/>
+    <maxMemType1 value="0"/>
+  </post>
+
+  <CFF>
+    <major value="1"/>
+    <minor value="0"/>
+    <CFFFont name="GS2TestFontRegular">
+      <version value="1.0"/>
+      <FullName value="GS2 Test Font Regular"/>
+      <FamilyName value="GS2 Test Font"/>
+      <Weight value="Regular"/>
+      <isFixedPitch value="0"/>
+      <ItalicAngle value="0"/>
+      <UnderlinePosition value="-100"/>
+      <UnderlineThickness value="50"/>
+      <PaintType value="0"/>
+      <CharstringType value="2"/>
+      <FontMatrix value="0.001 0 0 0.001 0 0"/>
+      <FontBBox value="0 -2 800 655"/>
+      <StrokeWidth value="0"/>
+      <!-- charset is dumped separately as the 'GlyphOrder' element -->
+      <Encoding name="StandardEncoding"/>
+      <Private>
+        <BlueScale value="0.039625"/>
+        <BlueShift value="7"/>
+        <BlueFuzz value="1"/>
+        <ForceBold value="0"/>
+        <LanguageGroup value="0"/>
+        <ExpansionFactor value="0.06"/>
+        <initialRandomSeed value="0"/>
+        <defaultWidthX value="0"/>
+        <nominalWidthX value="0"/>
+      </Private>
+      <CharStrings>
+        <CharString name=".notdef">
+          488 0 0 rmoveto
+          0 0 488 0 0 0 rrcurveto
+          0 0 0 790 0 0 rrcurveto
+          0 0 -488 0 0 0 rrcurveto
+          0 0 0 -790 0 0 rrcurveto
+          56 734 rmoveto
+          0 0 375 0 0 0 rrcurveto
+          0 0 0 -678 0 0 rrcurveto
+          0 0 -375 0 0 0 rrcurveto
+          0 0 0 678 0 0 rrcurveto
+          endchar
+        </CharString>
+        <CharString name="A">
+          530 400 0 rmoveto
+          0 0 130 0 0 0 rrcurveto
+          0 0 -197 790 0 0 rrcurveto
+          0 0 -136 0 0 0 rrcurveto
+          0 0 -197 -790 0 0 rrcurveto
+          0 0 130 0 0 0 rrcurveto
+          0 0 37 145 0 0 rrcurveto
+          0 0 196 0 0 0 rrcurveto
+          0 0 37 -145 0 0 rrcurveto
+          -203 265 rmoveto
+          0 0 68 268 0 0 rrcurveto
+          0 0 68 -268 0 0 rrcurveto
+          0 0 -136 0 0 0 rrcurveto
+          endchar
+        </CharString>
+        <CharString name="B">
+          405 395 469 rmoveto
+          0 50 0 191 0 0 rrcurveto
+          0 44 -36 36 -44 0 rrcurveto
+          0 0 -305 0 0 0 rrcurveto
+          0 0 0 -790 0 0 rrcurveto
+          0 0 305 0 0 0 rrcurveto
+          44 0 36 36 0 44 rrcurveto
+          0 0 0 245 0 0 rrcurveto
+          0 32 -18 27 -27 13 rrcurveto
+          27 13 18 27 0 32 rrcurveto
+          -245 176 rmoveto
+          0 0 110 0 0 0 rrcurveto
+          0 0 0 -185 0 0 rrcurveto
+          0 0 -110 0 0 0 rrcurveto
+          0 0 0 185 0 0 rrcurveto
+          0 -318 rmoveto
+          0 0 110 0 0 0 rrcurveto
+          0 0 0 -194 0 0 rrcurveto
+          0 0 -110 0 0 0 rrcurveto
+          0 0 0 194 0 0 rrcurveto
+          endchar
+        </CharString>
+        <CharString name="C">
+          420 410 540 rmoveto
+          0 0 0 170 0 0 rrcurveto
+          0 44 -36 36 -44 0 rrcurveto
+          0 0 -190 0 -50 0 rrcurveto
+          -44 0 -36 -36 0 -44 rrcurveto
+          0 0 0 -580 0 -50 rrcurveto
+          0 -44 36 -36 44 0 rrcurveto
+          0 0 240 0 0 0 rrcurveto
+          44 0 36 36 0 44 rrcurveto
+          0 0 0 170 0 0 rrcurveto
+          0 0 -140 0 0 0 rrcurveto
+          0 0 0 -105 0 0 rrcurveto
+          0 0 -115 0 0 0 rrcurveto
+          0 0 0 500 0 0 rrcurveto
+          0 0 115 0 0 0 rrcurveto
+          0 0 0 -105 0 0 rrcurveto
+          0 0 140 0 0 0 rrcurveto
+          endchar
+        </CharString>
+        <CharString name="lig.A.B">
+          655 333 788 rmoveto
+          0 0 -126 0 0 0 rrcurveto
+          0 0 -197 -788 0 0 rrcurveto
+          0 0 130 0 0 0 rrcurveto
+          0 0 37 145 0 0 rrcurveto
+          0 0 135 0 0 0 rrcurveto
+          0 0 -15 112 0 0 rrcurveto
+          0 0 -99 0 0 0 rrcurveto
+          0 0 135 531 0 0 rrcurveto
+          312 -321 rmoveto
+          0 50 0 191 0 0 rrcurveto
+          0 44 -36 36 -44 0 rrcurveto
+          0 0 -305 0 0 0 rrcurveto
+          0 0 0 -790 0 0 rrcurveto
+          0 0 305 0 0 0 rrcurveto
+          44 0 36 36 0 44 rrcurveto
+          0 0 0 245 0 0 rrcurveto
+          0 32 -18 27 -27 13 rrcurveto
+          27 13 18 27 0 32 rrcurveto
+          -245 180 rmoveto
+          0 0 110 0 0 0 rrcurveto
+          0 0 0 -185 0 0 rrcurveto
+          0 0 -110 0 0 0 rrcurveto
+          0 0 0 185 0 0 rrcurveto
+          0 -320 rmoveto
+          0 0 110 0 0 0 rrcurveto
+          0 0 0 -194 0 0 rrcurveto
+          0 0 -110 0 0 0 rrcurveto
+          0 0 0 194 0 0 rrcurveto
+          endchar
+        </CharString>
+        <CharString name="space">
+          200 endchar
+        </CharString>
+      </CharStrings>
+    </CFFFont>
+
+    <GlobalSubrs>
+      <!-- The 'index' attribute is only for humans; it is ignored when parsed. -->
+    </GlobalSubrs>
+  </CFF>
+
+  <GSUB>
+    <Version value="0x00010000"/>
+    <ScriptList>
+      <!-- ScriptCount=1 -->
+      <ScriptRecord index="0">
+        <ScriptTag value="DFLT"/>
+        <Script>
+          <DefaultLangSys>
+            <ReqFeatureIndex value="65535"/>
+            <!-- FeatureCount=1 -->
+            <FeatureIndex index="0" value="0"/>
+          </DefaultLangSys>
+          <!-- LangSysCount=0 -->
+        </Script>
+      </ScriptRecord>
+    </ScriptList>
+    <FeatureList>
+      <!-- FeatureCount=1 -->
+      <FeatureRecord index="0">
+        <FeatureTag value="liga"/>
+        <Feature>
+          <!-- LookupCount=1 -->
+          <LookupListIndex index="0" value="0"/>
+        </Feature>
+      </FeatureRecord>
+    </FeatureList>
+    <LookupList>
+      <!-- LookupCount=1 -->
+      <Lookup index="0">
+        <LookupType value="4"/>
+        <LookupFlag value="0"/>
+        <!-- SubTableCount=1 -->
+        <LigatureSubst index="0">
+          <LigatureSet glyph="A">
+            <Ligature components="B" glyph="lig.A.B"/>
+          </LigatureSet>
+        </LigatureSubst>
+      </Lookup>
+    </LookupList>
+  </GSUB>
+
+  <hmtx>
+    <mtx name=".notdef" width="488" lsb="0"/>
+    <mtx name="A" width="530" lsb="0"/>
+    <mtx name="B" width="405" lsb="0"/>
+    <mtx name="C" width="420" lsb="0"/>
+    <mtx name="lig.A.B" width="655" lsb="0"/>
+    <mtx name="space" width="200" lsb="0"/>
+  </hmtx>
+
+</ttFont>

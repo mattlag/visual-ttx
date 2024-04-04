@@ -6,12 +6,13 @@ import DropTarget from './DropTarget';
 import TableDisplay from './VisualEditor/TableDisplay';
 import TableTabs from './VisualEditor/TableTabs';
 
-export const loadedFileContext = React.createContext(null);
+export const vttxContext = React.createContext(null);
 
 export default function App() {
 	// File data
 	const [xmlDoc, setXmlDoc] = React.useState(new Document());
 	const [loadedFilePath, setLoadedFilePath] = React.useState('');
+	const [loadedFileName, setLoadedFileName] = React.useState('');
 
 	// UI states
 	const [isFileLoaded, setIsFileLoaded] = React.useState(false);
@@ -56,8 +57,19 @@ export default function App() {
 		<CodeEditor ttxData={getXmlAsText()} setTtxData={setXmlDocFromText} />
 	);
 
-	function getXmlAsText() {
-		const xmlString = new XMLSerializer().serializeToString(xmlDoc);
+	function getXmlAsText(scrubVttxIds = false) {
+		let exportDoc:Document = xmlDoc;
+
+		function scrubVttxIdsFromNode(node: Element) {
+			node.removeAttribute('vttx-node');
+			Array.from(node.children).forEach((child) => scrubVttxIdsFromNode(child));
+		}
+
+		if (scrubVttxIds) {
+			exportDoc = xmlDoc.cloneNode(true).ownerDocument;
+			scrubVttxIdsFromNode(exportDoc.documentElement);
+		}
+		const xmlString = new XMLSerializer().serializeToString(exportDoc);
 		return xmlString;
 	}
 
@@ -71,7 +83,9 @@ export default function App() {
 	*/
 	const appJsx = (
 		<>
-			<loadedFileContext.Provider value={{ loadFile, setupLoadedFile }}>
+			<vttxContext.Provider
+				value={{ loadFile, setupLoadedFile, updateNodeText }}
+			>
 				<header>
 					<h1 id="app-title" title={loadedFilePath}>
 						vttx
@@ -128,9 +142,24 @@ export default function App() {
 						<DropTarget></DropTarget>
 					)}
 				</main>
-			</loadedFileContext.Provider>
+			</vttxContext.Provider>
 		</>
 	);
+
+	function updateNodeText(nodeID: string, newText: string) {
+		const node = xmlDoc.querySelectorAll(`[vttx-node="${nodeID}"]`)[0];
+		const depth = parseInt(node.getAttribute('vttx-node').split('-')[1]);
+		let indent = ''; 
+		for (let i = 0; i < depth; i++) indent += '  ';
+		node.innerHTML = `\n${indent}  ${newText}\n${indent}`;
+		if (node.nodeName === 'CharString') {
+			node.innerHTML = node.innerHTML.replaceAll('\n', '\n          ');
+			node.innerHTML = node.innerHTML.replaceAll(
+				'                ',
+				'      '
+			);
+		}
+	}
 
 	/*
 		Loading files
@@ -146,12 +175,24 @@ export default function App() {
 		// console.log(`Passed file:`);
 		// console.log(fileInfo);
 
-		// Set the Path
+		// Set the Path and Name
 		setLoadedFilePath(fileInfo.path);
+		setLoadedFileName(fileInfo.name);
 
 		// Set the XML Doc
 		const xmlDoc = xmlTextToDoc(fileInfo.content).documentElement;
+		let idNumber = 0;
+		let depth = 0;
+		function setVttxIdsForNode(node: Element) {
+			node.setAttribute('vttx-node', `id-${depth}-${idNumber}`);
+			idNumber++;
+			depth++;
+			Array.from(node.children).forEach((child) => setVttxIdsForNode(child));
+			depth--;
+		}
+		setVttxIdsForNode(xmlDoc);
 		setXmlDoc(xmlDoc);
+		console.log(xmlDoc);
 
 		// Reset UI states
 		selectTableTab('GlyphOrder');
@@ -163,20 +204,22 @@ export default function App() {
 	*/
 	function saveTTXFile() {
 		// console.log('saveTTXFile');
-		const loadedFile = React.useContext(loadedFileContext);
-		// console.log(loadedFile);
-		const saveFile = loadedFile;
-		saveFile.content = getXmlAsText();
+		const saveFile = {
+			content: getXmlAsText(true),
+			name: loadedFileName,
+			path: loadedFilePath,
+		};
 		const result = window.vttxApi.handleSaveTTXFile(saveFile);
 		console.log(result);
 	}
 
 	function saveFontFile() {
 		// console.log('saveFontFile');
-		const loadedFile = React.useContext(loadedFileContext);
-		// console.log(loadedFile);
-		const saveFile = loadedFile;
-		saveFile.content = getXmlAsText();
+		const saveFile = {
+			content: getXmlAsText(true),
+			name: loadedFileName,
+			path: loadedFilePath,
+		};
 		const result = window.vttxApi.handleSaveFontFile(saveFile);
 		console.log(result);
 	}

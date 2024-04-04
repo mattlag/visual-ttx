@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { loadedFileContext } from '../App';
+import { vttxContext } from '../App';
 import XmlNodeDisplay from './XmlNodeDisplay';
 
 export default function TableDisplay({
@@ -9,7 +9,7 @@ export default function TableDisplay({
 	xmlDoc: Document;
 	selectedTableTab: string;
 }) {
-	const fileCtx = React.useContext(loadedFileContext);
+	const fileCtx = React.useContext(vttxContext);
 	if (selectedTableTab === '_load_file_') {
 		return (
 			<div

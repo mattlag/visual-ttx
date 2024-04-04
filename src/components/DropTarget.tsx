@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { loadedFileContext } from './App';
+import { vttxContext } from './App';
 
 export default function DropTarget() {
-	const fileCtx = React.useContext(loadedFileContext);
+	const vttxCtx = React.useContext(vttxContext);
 	return (
 		<div
 			id="load-file-drop-area"
@@ -17,7 +17,7 @@ export default function DropTarget() {
 				To load a file, drag+drop one here,
 				<br></br>
 				or&nbsp;
-				<a href="" onClick={fileCtx.loadFile}>
+				<a href="" onClick={vttxCtx.loadFile}>
 					launch a file chooser
 				</a>
 				.
@@ -53,7 +53,7 @@ export default function DropTarget() {
 		// console.log(`fileResult:`);
 		// console.log(fileResult);
 		if (fileResult) {
-			fileCtx.setupLoadedFile(fileResult);
+			vttxCtx.setupLoadedFile(fileResult);
 		}
 	}
 

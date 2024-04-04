@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { vttxContext } from '../App';
 /*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
 
 export default function XmlNodeDisplay({ data }: { data: Element }) {
@@ -18,9 +19,20 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 			value.length === 0 &&
 			tablesThatShouldHaveWhitespace.includes(data.parentElement.nodeName)
 		) {
-			return <pre className="xml-value"></pre>;
+			return (
+				<TextNodeEditable
+					value={''}
+					nodeID={data.parentElement.getAttribute('vttx-node')}
+				></TextNodeEditable>
+			);
 		} else if (!value.length) return null;
-		else return <pre className="xml-value">{value}</pre>;
+		else
+			return (
+				<TextNodeEditable
+					value={value}
+					nodeID={data.parentElement.getAttribute('vttx-node')}
+				></TextNodeEditable>
+			);
 	} else {
 		// Elements
 		const attributes = Array.from(data.attributes || []) || [];
@@ -29,13 +41,16 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 			<article className="xml-node">
 				<h3>{data.nodeName}</h3>
 				{attributes.length
-					? attributes.map((attr) => (
-							<span key={attr.name} className="xml-attribute">
-								<span className="xml-attribute-piece">{attr.name}</span>
-								<span className="xml-attribute-separator">:</span>
-								<span className="xml-attribute-piece">{attr.value}</span>
-							</span>
-					  ))
+					? attributes.map(
+							(attr) =>
+								attr.name !== 'vttx-node' && (
+									<span key={attr.name} className="xml-attribute">
+										<span className="xml-attribute-piece">{attr.name}</span>
+										<span className="xml-attribute-separator">:</span>
+										<span className="xml-attribute-piece">{attr.value}</span>
+									</span>
+								)
+					  )
 					: null}
 				{childNodes.length
 					? childNodes.map((node: Element, index: number) => (
@@ -46,6 +61,29 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 		);
 	}
 }
+
+const TextNodeEditable = ({
+	value,
+	nodeID,
+}: {
+	value: string;
+	nodeID: string;
+}) => {
+	const [content, setContent] = React.useState(value);
+	const vttxCtx = React.useContext(vttxContext);
+	return (
+		<textarea
+			className="xml-value"
+			value={content}
+			onChange={(event) => {
+				const newValue = event.currentTarget.value;
+				setContent(newValue);
+				vttxCtx.updateNodeText(nodeID, newValue);
+			}}
+			rows={(value.split('\n').length)}
+		/>
+	);
+};
 
 function trim(text: string): string {
 	const trimNewlines = false;
