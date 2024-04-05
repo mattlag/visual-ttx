@@ -160,18 +160,20 @@ export default function App() {
 			);
 		}
 	}
-
+ 
 	/*
 		Loading files
 	*/
 	async function loadFile() {
+		// console.log(`START App.tsx - loadFile`);
 		const fileInfo = await window.vttxApi.handleLoadFile();
 		// console.log(fileInfo);
 		await setupLoadedFile(fileInfo);
+		// console.log(`END App.tsx - loadFile`);
 	}
 
 	async function setupLoadedFile(fileInfo: FileInfo) {
-		// console.log(`APP.TSX setupLoadedFile`);
+		// console.log(`START App.tsx - setupLoadedFile`);
 		// console.log(`Passed file:`);
 		// console.log(fileInfo);
 
@@ -192,11 +194,13 @@ export default function App() {
 		}
 		setVttxIdsForNode(xmlDoc);
 		setXmlDoc(xmlDoc);
-		console.log(xmlDoc);
+		// console.log(xmlDoc);
 
 		// Reset UI states
 		selectTableTab('GlyphOrder');
 		setIsFileLoaded(true);
+
+		// console.log(`END App.tsx - setupLoadedFile`);
 	}
 
 	/*
@@ -210,7 +214,8 @@ export default function App() {
 			path: loadedFilePath,
 		};
 		const result = window.vttxApi.handleSaveTTXFile(saveFile);
-		console.log(result);
+		// console.log(result);
+		return result;
 	}
 
 	function saveFontFile() {
@@ -221,7 +226,8 @@ export default function App() {
 			path: loadedFilePath,
 		};
 		const result = window.vttxApi.handleSaveFontFile(saveFile);
-		console.log(result);
+		// console.log(result);
+		return result;
 	}
 
 	return appJsx;

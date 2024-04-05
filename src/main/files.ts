@@ -12,8 +12,8 @@ export interface FileInfo {
 
 
 export async function handleLoadFile(filePath?: string) {
-	console.log(`FILES.TS handleLoadFile`);
-	console.log(`filepath: ${filePath}`);
+	// console.log(`START files.ts - handleLoadFile`);
+	// console.log(`filepath: ${filePath}`);
 	const ttxExtensions = ['ttx', 'otx', 'xml'];
 	const fontExtensions = ['otf', 'ttf', 'woff', 'woff2'];
 	const result: FileInfo = {};
@@ -29,8 +29,8 @@ export async function handleLoadFile(filePath?: string) {
 			],
 		});
 
-		console.log('openDialogResult');
-		console.log(openDialogResult);
+		// console.log('openDialogResult');
+		// console.log(openDialogResult);
 
 		canceled = openDialogResult.canceled;
 		filePaths = openDialogResult.filePaths;
@@ -42,11 +42,11 @@ export async function handleLoadFile(filePath?: string) {
 
 	const stringPath = filePath || filePaths[0];
 	result.path = stringPath;
-	console.log(`stringPath: ${stringPath}`);
+	// console.log(`stringPath: ${stringPath}`);
 
 	const suffix = getSuffix(stringPath);
 	result.suffix = suffix;
-	console.log(`file type: ${suffix}`);
+	// console.log(`file type: ${suffix}`);
 
 	const name = getFileName(stringPath);
 	result.name = name;
@@ -63,15 +63,16 @@ export async function handleLoadFile(filePath?: string) {
 		result.content = Buffer.from(content).toString();
 	}
 
-	console.log(message);
+	// console.log(message);
 	result.message = message;
-	console.log(result.content.length);
+	// console.log(result.content.length);
+	// console.log(`END files.ts - handleLoadFile`);
 	return result;
 }
 
 export async function handleSaveTTXFile(fileInfo: FileInfo) {
-	console.log('handleSaveTTXFile');
-	console.log(fileInfo);
+	// console.log('handleSaveTTXFile');
+	// console.log(fileInfo);
 	const { canceled, filePath } = await dialog.showSaveDialog(
 		BrowserWindow.getFocusedWindow(),
 		{

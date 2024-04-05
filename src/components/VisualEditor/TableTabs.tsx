@@ -17,7 +17,7 @@ export default function TableTabs({
 			<div key={"table-layout-tabs"} className="table-layout-tabs">
 				{xmlDoc.children &&
 					Array.from(xmlDoc.children).map((node, index) => (
-						<>
+						<span key={`row-${node.nodeName}`} className="table-layout-tab-row">
 							<button
 								onClick={() => {
 									selectTableTab(node.nodeName);
@@ -37,7 +37,7 @@ export default function TableTabs({
 								key={`infoDialog-${index}-${node.nodeName}`}
 								tableName={node.nodeName}
 							></InfoDialog>
-						</>
+						</span>
 					))}
 			</div>
 		);

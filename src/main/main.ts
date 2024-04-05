@@ -56,9 +56,12 @@ app.whenReady().then(() => {
 	 * IPC Handlers
 	 */
 	ipcMain.handle('handleLoadFile', async (event, args) => {
-		console.log(`MAIN.TS handleLoadFile`);
-		console.log(args);
-		return await handleLoadFile(args);
+		// console.log(`START main.ts - handleLoadFile`);
+		// console.log(args);
+		const result = await handleLoadFile(args);
+		// console.log(result.content.length);
+		// console.log(`END main.ts - handleLoadFile`);
+		return result;
 	});
 	ipcMain.handle('handleSaveTTXFile', async (event, args) => {
 		return await handleSaveTTXFile(args);

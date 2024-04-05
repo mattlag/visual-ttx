@@ -9,7 +9,6 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-family: Helvetica, sans-serif;
 	box-sizing: border-box;
 	user-select: none;
 }
@@ -56,6 +55,16 @@ code {
 	display: inline-block;
 }
 
+a {
+	color:hsl(var(--accent-hue), 100%, 30%);
+	text-decoration: underline;
+	padding: 0px 2px;
+}
+
+a:hover {
+	cursor:pointer;
+}
+
 /*
 	Page Layout
 */
@@ -65,6 +74,7 @@ code {
 	overflow: hidden;
 	display: grid;
 	grid-template-rows: 60px 1fr;
+	font-family: Helvetica, sans-serif;
 }
 
 header {
@@ -158,17 +168,21 @@ header {
 .table-layout-tabs {
 	padding: 20px 20px 0px 18px;
 	display: grid;
-	grid-template-columns: max-content 1fr;
 	grid-template-rows: repeat(auto, min-content);
 	row-gap: 10px;
 	height: min-content;
 }
 
-.table-layout-tabs img {
+.table-layout-tab-row {
+	display:grid;
+	grid-template-columns: max-content 24px;
+	width: 100%;
+}
+
+.table-layout-tab-row img {
 	grid-column: 2;
-	height: 18px;
-	width: 18px;
-	margin-left: 20px;
+	height: 14px;
+	width: 14px;
 	margin-top: 10px;
 	filter: saturate(0.1) brightness(1.15);
 }
@@ -338,4 +352,11 @@ dialog h3 {
 	font-family: monospace;
 	color: hsl(var(--accent-hue), 100%, 20%);
 	font-size: 1.2em;
+}
+
+/*
+	CodeMirror
+*/
+.cm-editor {
+	font-size: 1.1em;
 }
