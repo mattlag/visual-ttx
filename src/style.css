@@ -56,13 +56,13 @@ code {
 }
 
 a {
-	color:hsl(var(--accent-hue), 100%, 30%);
+	color: hsl(var(--accent-hue), 100%, 30%);
 	text-decoration: underline;
 	padding: 0px 2px;
 }
 
 a:hover {
-	cursor:pointer;
+	cursor: pointer;
 }
 
 /*
@@ -174,7 +174,7 @@ header {
 }
 
 .table-layout-tab-row {
-	display:grid;
+	display: grid;
 	grid-template-columns: max-content 24px;
 	width: 100%;
 }
@@ -200,7 +200,7 @@ header {
 	grid-column: 1;
 	width: min-content;
 	font-size: 1.2em;
-	padding: 5px 10px;
+	padding: 5px 12px 4px 10px;
 	display: block;
 	border: 0px;
 	color: hsl(var(--accent-hue), 100%, 20%);
@@ -315,6 +315,41 @@ dialog h3 {
 	margin: 0px 10px 8px 0px;
 	display: inline-block;
 	font-weight: normal;
+}
+
+.xml-node h3.collapsible,
+.xml-node .not-collapsible {
+	position: relative;
+	left: -42px;
+	margin-right: -30px;
+}
+
+.xml-node .collapse-control {
+	display: inline-block;
+	height: 34px;
+	width: 34px;
+	position: relative;
+	left: -36px;
+}
+
+.xml-node button.collapse-control {
+	border-width: 10px;
+	border-color: hsl(var(--accent-hue), 30%, 95%);
+	padding: 0;
+	border-radius: 14px;
+	background-color: hsl(var(--accent-hue), 30%, 90%);
+	color: hsl(var(--accent-hue), 30%, 60%);
+}
+.xml-node button.collapse-control svg {
+	fill: hsl(var(--accent-hue), 30%, 60%);
+}
+
+.xml-node button.collapse-control:hover {
+	background-color: hsl(var(--accent-hue), 60%, 70%);
+	color: hsl(var(--accent-hue), 90%, 30%);
+}
+.xml-node button.collapse-control:hover svg {
+	fill: hsl(var(--accent-hue), 90%, 30%);
 }
 
 .xml-attribute {

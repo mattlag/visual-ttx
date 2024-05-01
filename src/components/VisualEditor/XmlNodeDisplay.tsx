@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { getFontTableInformation } from '../../lib/font-tables';
 import { vttxContext } from '../App';
 /*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
 
@@ -37,9 +38,23 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 		// Elements
 		const attributes = Array.from(data.attributes || []) || [];
 		const childNodes = Array.from(data.childNodes || []) || [];
+		const col =
+			childNodes.length > 1 && !getFontTableInformation(data.nodeName);
+
 		return (
 			<article className="xml-node">
-				<h3>{data.nodeName}</h3>
+				{col ? (
+					<button className="collapse-control">
+						<svg width={14} height={14} viewBox='0 0 14 14'>
+						<rect x="3" y="6" width="8" height="2"/>
+						<rect x="6" y="3" width="2" height="8"/>
+					</svg></button>
+				) : (
+					<span className="collapse-control">&nbsp;</span>
+				)}
+				<h3 className={col ? 'collapsible' : 'not-collapsible'}>
+					{data.nodeName}
+				</h3>
 				{attributes.length
 					? attributes.map(
 							(attr) =>
@@ -80,7 +95,7 @@ const TextNodeEditable = ({
 				setContent(newValue);
 				vttxCtx.updateNodeText(nodeID, newValue);
 			}}
-			rows={(value.split('\n').length)}
+			rows={value.split('\n').length}
 		/>
 	);
 };
