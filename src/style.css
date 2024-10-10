@@ -373,20 +373,38 @@ dialog h3 {
 }
 
 .xml-value {
-	font-size: 1.4em;
+	font-size: 1.2em;
 	font-weight: bold;
+	font-family: monospace;
+	background-color: white;
 	border: 1px solid lightblue;
 	border-radius: 2px;
-	width: 600px;
+	min-width: 300px;
+	width: fit-content;
 	height: max-content;
-	margin: 0px 4px 4px 0px;
-	padding: 10px;
+	max-height: 600px;
+	overflow-y: auto;
+	margin: 0px 4px 4px -10px;
+	padding: 10px 14px 10px 10px;
 }
 
 .xml-comment {
 	font-family: monospace;
 	color: hsl(var(--accent-hue), 100%, 20%);
 	font-size: 1.2em;
+}
+
+.xml-cdata {
+	font-family: monospace;
+	color: hsl(var(--accent-hue), 100%, 20%);
+	font-size: 1.2em;
+	border-left: 0;
+	padding-left: 0;
+	margin: 5px 0px 5px 0px;
+}
+
+.xml-cdata+.xml-value {
+	margin: 5px 0px 5px 0px;
 }
 
 /*

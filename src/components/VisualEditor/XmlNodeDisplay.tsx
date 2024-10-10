@@ -8,10 +8,25 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 	// console.log(data);
 
 	const [isCollapsed, setCollapsed] = React.useState(false);
+
 	if (data.nodeName === '#comment') {
 		// Comments
 		return (
 			<div className="xml-node xml-comment">&lt;!--{data.nodeValue}--&gt;</div>
+		);
+	} else if (data.nodeName === '#cdata-section') {
+		// CDATA
+		const value = trim('' + data.nodeValue);
+		return (
+			<span>
+				<div className="xml-node xml-cdata">&lt;![CDATA[</div>
+				<TextNodeEditable
+					isCdata={true}
+					value={value}
+					nodeID={data.parentElement.getAttribute('vttx-node')}
+				></TextNodeEditable>
+				<div className="xml-node xml-cdata">]]&gt;</div>
+			</span>
 		);
 	} else if (data.nodeName === '#text') {
 		// Text
@@ -25,6 +40,7 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 				<TextNodeEditable
 					value={''}
 					nodeID={data.parentElement.getAttribute('vttx-node')}
+					isCdata={false}
 				></TextNodeEditable>
 			);
 		} else if (!value.length) return null;
@@ -33,6 +49,7 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 				<TextNodeEditable
 					value={value}
 					nodeID={data.parentElement.getAttribute('vttx-node')}
+					isCdata={false}
 				></TextNodeEditable>
 			);
 	} else {
@@ -73,7 +90,7 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 					: null}
 				{childNodes.length && !isCollapsed
 					? childNodes.map((node: Element, index: number) => (
-							<XmlNodeDisplay key={index} data={node}/>
+							<XmlNodeDisplay key={index} data={node} />
 					  ))
 					: null}
 			</article>
@@ -82,25 +99,30 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 }
 
 const TextNodeEditable = ({
-	value,
-	nodeID,
+	value = '',
+	nodeID = '',
+	isCdata = false,
 }: {
 	value: string;
 	nodeID: string;
+	isCdata: boolean;
 }) => {
-	const [content, setContent] = React.useState(value);
 	const vttxCtx = React.useContext(vttxContext);
 	return (
-		<textarea
+		<div
 			className="xml-value"
-			value={content}
-			onChange={(event) => {
-				const newValue = event.currentTarget.value;
-				setContent(newValue);
+			contentEditable="true"
+			suppressContentEditableWarning={true}
+			onBlur={(event) => {
+				let newValue = event.currentTarget.textContent.trim();
+				if (isCdata) {
+					newValue = `<![CDATA[${newValue}]]>`;
+				}
 				vttxCtx.updateNodeText(nodeID, newValue);
 			}}
-			rows={value.split('\n').length}
-		/>
+		>
+			{value.trim()}
+		</div>
 	);
 };
 
