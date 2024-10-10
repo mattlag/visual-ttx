@@ -84,7 +84,7 @@ export default function App() {
 	const appJsx = (
 		<>
 			<vttxContext.Provider
-				value={{ loadFile, setupLoadedFile, updateNodeText }}
+				value={{ loadFile, setupLoadedFile, updateNodeText, updateNodeAttribute }}
 			>
 				<header>
 					<h1 id="app-title" title={loadedFilePath}>
@@ -158,6 +158,20 @@ export default function App() {
 				'                ',
 				'      '
 			);
+		}
+	}
+
+	function updateNodeAttribute(nodeID: string, oldAttributeName: string, whatToUpdate: string, newText: string) {
+		console.log(`START updateNodeAttribute`);
+		console.log(nodeID, oldAttributeName, whatToUpdate, newText);
+		const node = xmlDoc.querySelectorAll(`[vttx-node="${nodeID}"]`)[0];
+		console.log(node);
+		if (whatToUpdate === 'name') {
+			const oldValue = node.getAttribute(oldAttributeName);
+			node.removeAttribute(oldAttributeName);
+			node.setAttribute(newText, oldValue);
+		} else {
+			node.setAttribute(oldAttributeName, newText);
 		}
 	}
  

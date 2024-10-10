@@ -80,11 +80,12 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 					? attributes.map(
 							(attr) =>
 								attr.name !== 'vttx-node' && (
-									<span key={attr.name} className="xml-attribute">
-										<span className="xml-attribute-piece">{attr.name}</span>
-										<span className="xml-attribute-separator">:</span>
-										<span className="xml-attribute-piece">{attr.value}</span>
-									</span>
+									<Attribute
+										key={`${data.id}-attribute-${attr.name}`}
+										name={attr.name}
+										value={attr.value}
+										nodeID={data.getAttribute('vttx-node')}
+									/>
 								)
 					  )
 					: null}
@@ -126,6 +127,48 @@ const TextNodeEditable = ({
 	);
 };
 
+const Attribute = ({
+	name = '',
+	value = '',
+	nodeID = '',
+}: {
+	name: string;
+	value: string;
+	nodeID: string;
+}) => {
+	const vttxCtx = React.useContext(vttxContext);
+	return (
+		<span className="xml-attribute">
+			<span
+				className="xml-attribute-piece"
+				contentEditable="true"
+				suppressContentEditableWarning={true}
+				onBlur={(event) => {
+					const newName = event.currentTarget.textContent.trim();
+					vttxCtx.updateNodeAttribute(nodeID, name, 'name', newName);
+				}}
+			>
+				{name}
+			</span>
+			<span className="xml-attribute-separator">:</span>
+			<span
+				className="xml-attribute-piece"
+				contentEditable="true"
+				suppressContentEditableWarning={true}
+				onBlur={(event) => {
+					const newValue = event.currentTarget.textContent.trim();
+					vttxCtx.updateNodeAttribute(nodeID, name, 'value', newValue);
+				}}
+			>
+				{value}
+			</span>
+		</span>
+	);
+};
+
+/*
+	Helper functions
+*/
 function trim(text: string): string {
 	const trimNewlines = false;
 	try {

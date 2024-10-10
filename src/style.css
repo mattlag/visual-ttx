@@ -360,14 +360,24 @@ dialog h3 {
 	font-size: 1.2em;
 	border-radius: 2px;
 	margin: 0px 4px 4px 0px;
-	padding: 4px 8px;
+	padding: 0px 4px;
 }
 
 .xml-attribute-piece {
+	background-color: transparent;
+	display: inline-block;
+	padding: 2px 4px 4px 4px;
 	font-family: monospace;
 }
 
+.xml-attribute-piece:focus {
+	background-color: white;
+	color: black;
+}
+
 .xml-attribute-separator {
+	display: inline-block;
+	padding: 4px 0px;
 	opacity: 0.4;
 	margin: 0px 5px;
 }
