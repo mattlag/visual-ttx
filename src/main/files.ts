@@ -10,7 +10,6 @@ export interface FileInfo {
 	suffix?: string;
 }
 
-
 export async function handleLoadFile(filePath?: string) {
 	// console.log(`START files.ts - handleLoadFile`);
 	// console.log(`filepath: ${filePath}`);

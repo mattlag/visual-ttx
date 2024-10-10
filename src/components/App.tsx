@@ -81,9 +81,7 @@ export default function App() {
 		// console.log(node);
 		if (node?.removeAttribute) node.removeAttribute('vttx-node');
 		if (node?.children) {
-			Array.from(node.children).forEach((child) =>
-				scrubVttxIdsFromNode(child)
-			);
+			Array.from(node.children).forEach((child) => scrubVttxIdsFromNode(child));
 		}
 	}
 
@@ -164,14 +162,14 @@ export default function App() {
 					</div>
 				</header>
 				<main>
-					{isFileLoaded ? (
+					{isFileLoaded ? ( 
 						selectedEditorTab === 'visual' ? (
 							visualTabContents
 						) : (
 							xmlTabContents
 						)
 					) : (
-						<DropTarget></DropTarget>
+						<DropTarget initialLoadState="waiting" />
 					)}
 				</main>
 			</vttxContext.Provider>
@@ -216,6 +214,7 @@ export default function App() {
 		// console.log(`START App.tsx - loadFile`);
 		const fileInfo = await window.vttxApi.handleLoadFile();
 		// console.log(fileInfo);
+		// dropTarget.setLoadState('loading');
 		await setupLoadedFile(fileInfo);
 		// console.log(`END App.tsx - loadFile`);
 	}
@@ -262,7 +261,7 @@ export default function App() {
 	function saveTTXFile() {
 		// console.log('saveTTXFile');
 		const saveFile = {
-			content: getXmlAsText(true),
+			content: getXmlAsText(),
 			name: loadedFileName,
 			path: loadedFilePath,
 		};
@@ -274,7 +273,7 @@ export default function App() {
 	function saveFontFile() {
 		// console.log('saveFontFile');
 		const saveFile = {
-			content: getXmlAsText(true),
+			content: getXmlAsText(),
 			name: loadedFileName,
 			path: loadedFilePath,
 		};
