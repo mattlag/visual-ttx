@@ -4,8 +4,9 @@ import { vttxContext } from '../App';
 /*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
 
 export default function XmlNodeDisplay({ data }: { data: Element }) {
-	// console.log(`\nXmlNodeDisplay: ${data.nodeName}`);
 	// console.log(data);
+	if(!data) return null;
+	// console.log(`\nXmlNodeDisplay: ${data.nodeName}`);
 
 	const [isCollapsed, setCollapsed] = React.useState(false);
 

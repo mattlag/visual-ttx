@@ -413,13 +413,26 @@ dialog h3 {
 	margin: 5px 0px 5px 0px;
 }
 
-.xml-cdata+.xml-value {
+.xml-cdata + .xml-value {
 	margin: 5px 0px 5px 0px;
+}
+
+.warning-message {
+	padding: 20px;
+	margin: 10px;
+	color: darkred;
+	border: 1px dashed red;
+	background-color: pink;
+	border-radius: 4px;
 }
 
 /*
 	CodeMirror
 */
 .cm-editor {
-	font-size: 1.1em;
+	font-size: 1.2em;
+}
+
+.cm-line {
+	margin: 4px 0px;
 }

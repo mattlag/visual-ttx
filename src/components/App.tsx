@@ -11,6 +11,7 @@ export const vttxContext = React.createContext(null);
 export default function App() {
 	// File data
 	const [xmlDoc, setXmlDoc] = React.useState(new Document());
+	let xmlDocError = false;
 	const [loadedFilePath, setLoadedFilePath] = React.useState('');
 	const [loadedFileName, setLoadedFileName] = React.useState('');
 
@@ -22,7 +23,7 @@ export default function App() {
 	/*
 		Visual-style editor
 	*/
-	const visualTabContents = (
+	const visualTabContents = !xmlDocError ? (
 		<>
 			<div className="table-layout">
 				<TableTabs
@@ -36,12 +37,22 @@ export default function App() {
 				/>
 			</div>
 		</>
+	) : (
+		<div className="warning-message">
+			There is an XML syntax error that is preventing this data from being
+			displayed.
+		</div>
 	);
 
 	function handleClickOnTabVisual() {
 		selectEditorTab('visual');
 		document.getElementById('tab-visual').classList.add('selected');
 		document.getElementById('tab-xml').classList.remove('selected');
+		if (xmlDocError) {
+			console.warn(
+				'Previous changes were not saved due to the XML document being in a bad state or having a syntax error.'
+			);
+		}
 	}
 
 	function handleClickOnTabXML() {
@@ -57,25 +68,41 @@ export default function App() {
 		<CodeEditor ttxData={getXmlAsText()} setTtxData={setXmlDocFromText} />
 	);
 
-	function getXmlAsText(scrubVttxIds = false) {
-		let exportDoc:Document = xmlDoc;
-
-		function scrubVttxIdsFromNode(node: Element) {
-			node.removeAttribute('vttx-node');
-			Array.from(node.children).forEach((child) => scrubVttxIdsFromNode(child));
-		}
-
-		if (scrubVttxIds) {
-			exportDoc = xmlDoc.cloneNode(true).ownerDocument;
-			scrubVttxIdsFromNode(exportDoc.documentElement);
-		}
-		const xmlString = new XMLSerializer().serializeToString(exportDoc);
+	function getXmlAsText() {
+		const sourceNode = xmlDoc.cloneNode(true);
+		// @ts-expect-error Technically this is a `Node` but we know it has `Element` properties
+		scrubVttxIdsFromNode(sourceNode);
+		const xmlString = new XMLSerializer().serializeToString(sourceNode);
 		return xmlString;
 	}
 
+	function scrubVttxIdsFromNode(node: Element) {
+		// console.log(`scrubVttxIdsFromNode START`);
+		// console.log(node);
+		if (node?.removeAttribute) node.removeAttribute('vttx-node');
+		if (node?.children) {
+			Array.from(node.children).forEach((child) =>
+				scrubVttxIdsFromNode(child)
+			);
+		}
+	}
+
 	function setXmlDocFromText(xmlString: string) {
-		const xmlDoc = xmlTextToDoc(xmlString);
-		setXmlDoc(xmlDoc);
+		let xmlDoc;
+		xmlDocError = false;
+		try {
+			xmlDoc = xmlTextToDoc(xmlString);
+		} catch (error) {
+			// console.log(`Detected error, setting xmlDocError to True`);
+			xmlDocError = true;
+		}
+
+		// console.log(`xmlDocError: ${xmlDocError}`);
+
+		if (!xmlDocError) {
+			setVttxIds(xmlDoc.documentElement);
+			setXmlDoc(xmlDoc.documentElement);
+		}
 	}
 
 	/*
@@ -84,7 +111,12 @@ export default function App() {
 	const appJsx = (
 		<>
 			<vttxContext.Provider
-				value={{ loadFile, setupLoadedFile, updateNodeText, updateNodeAttribute }}
+				value={{
+					loadFile,
+					setupLoadedFile,
+					updateNodeText,
+					updateNodeAttribute,
+				}}
 			>
 				<header>
 					<h1 id="app-title" title={loadedFilePath}>
@@ -149,23 +181,25 @@ export default function App() {
 	function updateNodeText(nodeID: string, newText: string) {
 		const node = xmlDoc.querySelectorAll(`[vttx-node="${nodeID}"]`)[0];
 		const depth = parseInt(node.getAttribute('vttx-node').split('-')[1]);
-		let indent = ''; 
+		let indent = '';
 		for (let i = 0; i < depth; i++) indent += '  ';
 		node.innerHTML = `\n${indent}  ${newText}\n${indent}`;
 		if (node.nodeName === 'CharString') {
 			node.innerHTML = node.innerHTML.replaceAll('\n', '\n          ');
-			node.innerHTML = node.innerHTML.replaceAll(
-				'                ',
-				'      '
-			);
+			node.innerHTML = node.innerHTML.replaceAll('                ', '      ');
 		}
 	}
 
-	function updateNodeAttribute(nodeID: string, oldAttributeName: string, whatToUpdate: string, newText: string) {
-		console.log(`START updateNodeAttribute`);
-		console.log(nodeID, oldAttributeName, whatToUpdate, newText);
+	function updateNodeAttribute(
+		nodeID: string,
+		oldAttributeName: string,
+		whatToUpdate: string,
+		newText: string
+	) {
+		// console.log(`START updateNodeAttribute`);
+		// console.log(nodeID, oldAttributeName, whatToUpdate, newText);
 		const node = xmlDoc.querySelectorAll(`[vttx-node="${nodeID}"]`)[0];
-		console.log(node);
+		// console.log(node);
 		if (whatToUpdate === 'name') {
 			const oldValue = node.getAttribute(oldAttributeName);
 			node.removeAttribute(oldAttributeName);
@@ -174,7 +208,7 @@ export default function App() {
 			node.setAttribute(oldAttributeName, newText);
 		}
 	}
- 
+
 	/*
 		Loading files
 	*/
@@ -197,6 +231,18 @@ export default function App() {
 
 		// Set the XML Doc
 		const xmlDoc = xmlTextToDoc(fileInfo.content).documentElement;
+		setVttxIds(xmlDoc);
+		setXmlDoc(xmlDoc);
+		// console.log(xmlDoc);
+
+		// Reset UI states
+		selectTableTab('GlyphOrder');
+		setIsFileLoaded(true);
+
+		// console.log(`END App.tsx - setupLoadedFile`);
+	}
+
+	function setVttxIds(node: Element) {
 		let idNumber = 0;
 		let depth = 0;
 		function setVttxIdsForNode(node: Element) {
@@ -206,15 +252,8 @@ export default function App() {
 			Array.from(node.children).forEach((child) => setVttxIdsForNode(child));
 			depth--;
 		}
-		setVttxIdsForNode(xmlDoc);
-		setXmlDoc(xmlDoc);
-		// console.log(xmlDoc);
 
-		// Reset UI states
-		selectTableTab('GlyphOrder');
-		setIsFileLoaded(true);
-
-		// console.log(`END App.tsx - setupLoadedFile`);
+		setVttxIdsForNode(node);
 	}
 
 	/*

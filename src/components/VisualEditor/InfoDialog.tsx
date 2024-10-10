@@ -48,13 +48,13 @@ export default function InfoDialog({ tableName }: { tableName: string }) {
 	);
 
 	function showInfoDialog() {
-		console.log(`Clicked on info icon for ${tableName}`);
+		// console.log(`Clicked on info icon for ${tableName}`);
 		const dialog: any = document.getElementById(`dialog-${tableName}`); // eslint-disable-line @typescript-eslint/no-explicit-any
 		dialog.showModal();
 	}
 
 	function hideInfoDialog() {
-		console.log(`Closing dialog for ${tableName}`);
+		// console.log(`Closing dialog for ${tableName}`);
 		const dialog: any = document.getElementById(`dialog-${tableName}`); // eslint-disable-line @typescript-eslint/no-explicit-any
 		if (dialog.open) dialog.close();
 	}
