@@ -17,10 +17,7 @@ export default function DropTarget() {
 				To load a file, drag+drop one here,
 				<br></br>
 				or&nbsp;
-				<a onClick={handleClickOpenFileChooser}>
-					launch a file chooser
-				</a>
-				.
+				<a onClick={handleClickOpenFileChooser}>launch a file chooser</a>.
 			</div>
 			<br></br>
 			<div>
@@ -45,6 +42,10 @@ export default function DropTarget() {
 		// console.log(`DropTarget.TSX handleDrop`);
 		event.preventDefault();
 		event.stopPropagation();
+
+		document
+			.getElementById('file-icon')
+			.setAttribute('src', 'action_loading.svg');
 
 		const pathResult = event?.dataTransfer?.files[0]?.path;
 		let fileResult;

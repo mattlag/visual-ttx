@@ -7,6 +7,7 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 	// console.log(`\nXmlNodeDisplay: ${data.nodeName}`);
 	// console.log(data);
 
+	const [isCollapsed, setCollapsed] = React.useState(false);
 	if (data.nodeName === '#comment') {
 		// Comments
 		return (
@@ -38,21 +39,24 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 		// Elements
 		const attributes = Array.from(data.attributes || []) || [];
 		const childNodes = Array.from(data.childNodes || []) || [];
-		const col =
+		const isCollapsible =
 			childNodes.length > 1 && !getFontTableInformation(data.nodeName);
-
 		return (
 			<article className="xml-node">
-				{col ? (
-					<button className="collapse-control">
-						<svg width={14} height={14} viewBox='0 0 14 14'>
-						<rect x="3" y="6" width="8" height="2"/>
-						<rect x="6" y="3" width="2" height="8"/>
-					</svg></button>
+				{isCollapsible ? (
+					<button
+						onClick={() => setCollapsed(!isCollapsed)}
+						className="collapse-control"
+					>
+						<svg width={14} height={14} viewBox="0 0 14 14">
+							<rect x="3" y="6" width="8" height="2" />
+							{isCollapsed ? <rect x="6" y="3" width="2" height="8" /> : null}
+						</svg>
+					</button>
 				) : (
 					<span className="collapse-control">&nbsp;</span>
 				)}
-				<h3 className={col ? 'collapsible' : 'not-collapsible'}>
+				<h3 className={isCollapsible ? 'collapsible' : 'not-collapsible'}>
 					{data.nodeName}
 				</h3>
 				{attributes.length
@@ -67,9 +71,9 @@ export default function XmlNodeDisplay({ data }: { data: Element }) {
 								)
 					  )
 					: null}
-				{childNodes.length
+				{childNodes.length && !isCollapsed
 					? childNodes.map((node: Element, index: number) => (
-							<XmlNodeDisplay key={index} data={node} />
+							<XmlNodeDisplay key={index} data={node}/>
 					  ))
 					: null}
 			</article>
