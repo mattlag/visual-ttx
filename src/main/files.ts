@@ -1,6 +1,5 @@
 import { BrowserWindow, dialog } from 'electron';
 import fs from 'fs';
-const { ttx } = require('@web-alchemy/fonttools'); // eslint-disable-line
 
 export interface FileInfo {
 	content?: string;
@@ -58,8 +57,28 @@ export async function handleLoadFile(filePath?: string) {
 
 	if (fontExtensions.includes(suffix)) {
 		message = 'Identified as font';
-		const content = await ttx(stringPath);
-		result.content = Buffer.from(content).toString();
+		// Dynamically import TTX-WASM ESM version
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const TTXWasm = (await import('ttx-wasm/dist/ttx-wasm.esm.js' as any)).default;
+		// Initialize TTX if not already initialized
+		if (!TTXWasm.isInitialized()) {
+			try {
+				await TTXWasm.initialize();
+			} catch (error) {
+				console.error('Failed to initialize TTX-WASM:', error);
+				result.message = 'Error: Failed to initialize font processing';
+				return result;
+			}
+		}
+		const fontData = fs.readFileSync(stringPath);
+		try {
+			const content = await TTXWasm.dumpToTTX(new Uint8Array(fontData));
+			result.content = content;
+		} catch (error) {
+			console.error('Failed to convert font to TTX:', error);
+			result.message = 'Error: Failed to convert font file';
+			return result;
+		}
 	}
 
 	// console.log(message);
@@ -101,13 +120,31 @@ export async function handleSaveFontFile(fileInfo: FileInfo) {
 		}
 	);
 
-	const fontBuffer = await ttx(Buffer.from(fileInfo.content));
+	// Dynamically import TTX-WASM ESM version
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const TTXWasm = (await import('ttx-wasm/dist/ttx-wasm.esm.js' as any)).default;
+	// Initialize TTX if not already initialized
+	if (!TTXWasm.isInitialized()) {
+		try {
+			await TTXWasm.initialize();
+		} catch (error) {
+			console.error('Failed to initialize TTX-WASM:', error);
+			return 'Error: Failed to initialize font processing';
+		}
+	}
 
-	if (!canceled) {
-		fs.writeFileSync(filePath, fontBuffer);
-		return 'File saved';
-	} else {
-		return 'Canceled';
+	try {
+		const fontBuffer = await TTXWasm.compileFromTTX(fileInfo.content);
+
+		if (!canceled) {
+			fs.writeFileSync(filePath, fontBuffer);
+			return 'File saved';
+		} else {
+			return 'Canceled';
+		}
+	} catch (error) {
+		console.error('Failed to compile TTX to font:', error);
+		return 'Error: Failed to compile font file';
 	}
 }
 

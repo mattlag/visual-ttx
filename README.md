@@ -3,7 +3,7 @@
 # visual-ttx: A GUI for TTX
 
 - [fontTools TTX](https://fonttools.readthedocs.io/en/latest/ttx.html) is an amazing Python tool that converts font files to XML, and XML back into a font. It is great for digging into the internals of a font file in a text-based way.
-- [web-alchemy/fonttools](https://github.com/web-alchemy/fonttools) ported this python tool to node.js.
+- [mattlag/ttx-wasm](https://github.com/mattlag/ttx-wasm) is a WebAssembly port of FontTools TTX for JavaScript environments.
 - Wrap this up in an [Electron](https://www.electronjs.org/) app, throw in some React, and **bam** we have a command line tool with a nice visual editor front-end.
 
 ## License & Copyright
