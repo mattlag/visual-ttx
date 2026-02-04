@@ -1,0 +1,30 @@
+# This is an Electron app, not an npm package
+# This file exists to prevent the gitignore-fallback warning
+
+# Development files
+*.md
+!README.md
+.gitignore
+.eslintrc*
+.prettierrc*
+tsconfig.json
+
+# Build configs
+forge.config.ts
+vite.*.config.ts
+
+# Source files (built output is used)
+src/
+
+# Working/test files
+working_files/
+
+# IDE/Editor
+.idea/
+.vscode/
+
+# Build artifacts
+out/
+dist/
+.vite/
+.webpack/
